@@ -5,7 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import dev.langchain4j.agent.tool.Tool;
-import org.vaadin.marcus.service.*;
+import org.vaadin.marcus.client.BookingService;
+import org.vaadin.marcus.client.ClientProfileService;
+import org.vaadin.marcus.service.Booking;
 
 import java.util.*;
 import java.time.LocalDate;
@@ -21,8 +23,8 @@ public class SimulationDataService {
     private final Random random = new Random();
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    private final FlightService flightService;
-    private final ClientService clientService;
+    private final BookingService bookingService;
+    private final ClientProfileService clientProfileService;
 
     private final List<String> cities = List.of("New York", "London", "Paris", "Tokyo", "Sydney", "Dubai", "Singapore", "Hong Kong", "Frankfurt", "Amsterdam");
     private final List<String> statuses = List.of("On Time", "Delayed", "Boarding", "Departed", "Arrived");
@@ -31,10 +33,10 @@ public class SimulationDataService {
     private final List<String> firstNames = Arrays.asList("James", "Mary", "John", "Patricia", "Robert", "Jennifer", "Michael", "Linda", "William", "Elizabeth");
     private final List<String> lastNames = Arrays.asList("Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia", "Miller", "Davis", "Rodriguez", "Martinez");
 
-    public SimulationDataService(ObjectMapper objectMapper, FlightService flightService, ClientService clientService) {
+    public SimulationDataService(ObjectMapper objectMapper, BookingService bookingService, ClientProfileService clientProfileService) {
         this.objectMapper = objectMapper;
-        this.flightService = flightService;
-        this.clientService = clientService;
+        this.bookingService = bookingService;
+        this.clientProfileService = clientProfileService;
     }
 
     public String generateFlightStatus() {
@@ -140,39 +142,53 @@ public class SimulationDataService {
         return "BRONZE";
     }
 
-    @Tool("Retrieves information about an existing booking")
-    public BookingDetails getBookingDetails(String bookingNumber, String firstName, String lastName) {
-        return flightService.getBookingDetails(bookingNumber, firstName, lastName);
-    }
+  
 
     @Tool("Modifies an existing booking")
     public void changeBooking(String bookingNumber, String firstName, String lastName,
                               LocalDate newFlightDate, String newDepartureAirport, String newArrivalAirport) {
-        flightService.changeBooking(bookingNumber, firstName, lastName, newFlightDate, newDepartureAirport, newArrivalAirport);
+        bookingService.changeBooking(bookingNumber, firstName, lastName, newFlightDate, newDepartureAirport, newArrivalAirport);
     }
 
     @Tool("Cancels an existing booking")
     public void cancelBooking(String bookingNumber, String firstName, String lastName) {
-        flightService.cancelBooking(bookingNumber, firstName, lastName);
+        bookingService.cancelBooking(bookingNumber, firstName, lastName);
     }
 
     @Tool("Books a flight")
     public void bookFlight(String bookingNumber, String firstName, String lastName) {
-        flightService.updateBooking(bookingNumber, firstName, lastName);
+        bookingService.updateBooking(bookingNumber, firstName, lastName);
     }
 
-    @Tool("Retrieves a list of available bookings")
-    public List<BookingDetails> getAvailableBookings() {
-        return flightService.getAvailableBookings();
-    }
+   
 
     @Tool("Confirms an existing booking")
     public void confirmBooking(String bookingNumber, String firstName, String lastName) {
-        flightService.confirmBooking(bookingNumber, firstName, lastName);
+        bookingService.confirmBooking(bookingNumber, firstName, lastName);
     }
 
     @Tool("Retrieves a list of confirmed bookings")
-    public List<BookingDetails> getConfirmedBookings() {
-        return flightService.getConfirmedBookings();
+    public List<Booking> getConfirmedBookings() {
+        return bookingService.getConfirmedBookings();
+    }
+
+    private void createAndAddBooking(int index) {
+        String status = bookingStatuses.get(random.nextInt(bookingStatuses.size()));
+        Booking booking = new Booking();
+        booking.setBookingNumber("B" + String.format("%03d", index));
+        booking.setFirstName(status.equals("AVAILABLE") ? "" : firstNames.get(random.nextInt(firstNames.size())));
+        booking.setLastName(status.equals("AVAILABLE") ? "" : lastNames.get(random.nextInt(lastNames.size())));
+        booking.setDate(LocalDate.now().plusDays(random.nextInt(365)));
+        booking.setFrom(cities.get(random.nextInt(cities.size())));
+        booking.setTo(cities.get(random.nextInt(cities.size())));
+        booking.setBookingStatus(status);
+        booking.setBookingClass(bookingClasses.get(random.nextInt(bookingClasses.size())));
+        bookingService.addBooking(booking);
+    }
+
+    public void generateAndAddBookings(int count) {
+        for (int i = 0; i < count; i++) {
+            createAndAddBooking(i + 1);
+        }
     }
 }
