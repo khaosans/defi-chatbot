@@ -13,7 +13,9 @@ public class ClientProfile {
     private String lastTravelDate;
     private Map<String, String> preferences;
 
-    public ClientProfile(String id, String name, String contactInfo, String frequentFlyerNumber, LoyaltyStatus loyaltyStatus, int travelScore, String lastTravelDate) {
+    public ClientProfile(String id, String name, String contactInfo, String frequentFlyerNumber, 
+                         LoyaltyStatus loyaltyStatus, int travelScore, String lastTravelDate, 
+                         Map<String, String> preferences) {
         this.id = id;
         this.name = name;
         this.contactInfo = contactInfo;
@@ -21,7 +23,7 @@ public class ClientProfile {
         this.loyaltyStatus = loyaltyStatus;
         this.travelScore = travelScore;
         this.lastTravelDate = lastTravelDate;
-        this.preferences = new HashMap<>(); // Initialize preferences
+        this.preferences = preferences;
     }
 
     // Getters and setters
@@ -39,6 +41,6 @@ public class ClientProfile {
     public void setTravelScore(int travelScore) { this.travelScore = travelScore; }
     public String getLastTravelDate() { return lastTravelDate; }
     public void setLastTravelDate(String lastTravelDate) { this.lastTravelDate = lastTravelDate; }
-    public Map<String, String> getPreferences() { return preferences != null ? preferences : new HashMap<>(); }
-    public void setPreferences(Map<String, String> preferences) { this.preferences = preferences != null ? preferences : new HashMap<>(); }
+    public Map<String, String> getPreferences() { return preferences; }
+    public void setPreferences(Map<String, String> preferences) { this.preferences = preferences; }
 }
