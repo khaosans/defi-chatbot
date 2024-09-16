@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 @Service
@@ -84,23 +85,64 @@ public class ClientService {
     }
 
     public void generateSampleData() {
-        for (int i = 1; i <= 10; i++) {
-            String clientId = "client" + i;
-            ClientProfile profile = new ClientProfile(
-                clientId,
-                "Client " + i,
-                String.format("client%d@example.com", i),
-                Map.of("preferredSeat", (i % 2 == 0) ? "Window" : "Aisle")
-            );
-            profile.setFrequentFlyerNumber(String.format("FF%d", 1000 + i));
+        String[] firstNames = {"John", "Emma", "Michael", "Sophia", "William", "Olivia", "James", "Ava", "Robert", "Isabella"};
+        String[] lastNames = {"Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia", "Miller", "Davis", "Rodriguez", "Martinez"};
+        String[] emailDomains = {"gmail.com", "yahoo.com", "hotmail.com", "outlook.com", "icloud.com"};
+        String[] cities = {"New York", "Los Angeles", "Chicago", "Houston", "Phoenix", "Philadelphia", "San Antonio", "San Diego", "Dallas", "San Jose"};
+        String[] countries = {"USA", "Canada", "UK", "Australia", "Germany", "France", "Japan", "Brazil", "India", "Italy"};
+        String[] seatPreferences = {"Window", "Aisle", "Middle", "No Preference"};
+        String[] mealPreferences = {"Regular", "Vegetarian", "Vegan", "Kosher", "Halal", "Gluten-free", "Dairy-free"};
+
+        Random random = new Random();
+
+        for (int i = 1; i <= 50; i++) {
+            String clientId = "C" + String.format("%04d", i);
+            String firstName = firstNames[random.nextInt(firstNames.length)];
+            String lastName = lastNames[random.nextInt(lastNames.length)];
+            String email = firstName.toLowerCase() + "." + lastName.toLowerCase() + "@" + emailDomains[random.nextInt(emailDomains.length)];
+            String phone = "+1" + String.format("%10d", ThreadLocalRandom.current().nextLong(1_000_000_000L, 9_999_999_999L));
+            
+            Map<String, String> preferences = new HashMap<>();
+            preferences.put("seatPreference", seatPreferences[random.nextInt(seatPreferences.length)]);
+            preferences.put("mealPreference", mealPreferences[random.nextInt(mealPreferences.length)]);
+            preferences.put("frequentFlyerNumber", "FF" + String.format("%06d", random.nextInt(1000000)));
+
+            ClientProfile profile = new ClientProfile(clientId, firstName + " " + lastName, email, preferences);
+            // Removed setPhone and setAddress calls
+            
             createClientProfile(clientId, profile);
+
+            // Generate sample bookings
+            generateSampleBookings(clientId, random);
+
+            // Generate sample interactions
+            generateSampleInteractions(clientId, random);
+        }
+    }
+
+    private void generateSampleBookings(String clientId, Random random) {
+        int bookingCount = random.nextInt(5) + 1; // 1 to 5 bookings per client
+        for (int i = 0; i < bookingCount; i++) {
+            LocalDate bookingDate = LocalDate.now().plusDays(random.nextInt(365));
+            String bookingNumber = "B" + String.format("%06d", random.nextInt(1000000));
+            String destination = "City" + (random.nextInt(20) + 1);
+            String[] statuses = {"CONFIRMED", "COMPLETED", "CANCELLED", "AWAITING_CONFIRMATION"};
+            String status = statuses[random.nextInt(statuses.length)];
             
-            // Add a sample booking
-            Booking booking = new Booking("B" + (2000 + i), LocalDate.now().plusDays(i), "Destination " + i, "CONFIRMED");
+            Booking booking = new Booking(bookingNumber, bookingDate, destination, status);
             addBooking(clientId, booking);
+        }
+    }
+
+    private void generateSampleInteractions(String clientId, Random random) {
+        int interactionCount = random.nextInt(3) + 1; // 1 to 3 interactions per client
+        for (int i = 0; i < interactionCount; i++) {
+            LocalDateTime interactionDate = LocalDateTime.now().minusDays(random.nextInt(30));
+            String[] types = {"Email", "Phone", "Chat", "In-person"};
+            String type = types[random.nextInt(types.length)];
+            String content = "Interaction about " + (random.nextBoolean() ? "booking" : "general inquiry");
             
-            // Add a sample interaction
-            Interaction interaction = new Interaction(LocalDateTime.now().minusDays(i), "Email", "Inquiry about flight " + i);
+            Interaction interaction = new Interaction(interactionDate, type, content);
             logInteraction(clientId, interaction);
         }
     }
