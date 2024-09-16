@@ -3,8 +3,8 @@ package org.vaadin.marcus.client;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import com.vaadin.hilla.BrowserCallable;
 import org.springframework.stereotype.Service;
-import org.vaadin.marcus.service.ClientService;
 import org.vaadin.marcus.service.ClientProfile;
+import org.vaadin.marcus.service.ClientService;
 
 import java.util.List;
 
