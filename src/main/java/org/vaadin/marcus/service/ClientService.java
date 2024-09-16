@@ -104,4 +104,10 @@ public class ClientService {
             logInteraction(clientId, interaction);
         }
     }
+
+    public List<ClientProfile> getAllClients() {
+        // Implement the logic to return all client profiles
+        // This might involve fetching from a database or returning from an in-memory store
+        return new ArrayList<>(clientProfiles.values());
+    }
 }

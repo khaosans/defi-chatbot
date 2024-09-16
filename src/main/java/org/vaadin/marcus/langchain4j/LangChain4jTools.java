@@ -10,12 +10,18 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.Optional;
 
 @Component
 public class LangChain4jTools {
 
     private final FlightService flightService;
     private final ClientService clientService;
+
+    // Add this new field to store client profiles in memory
+    private final ConcurrentHashMap<String, ClientProfile> clientProfiles = new ConcurrentHashMap<>();
 
     public LangChain4jTools(FlightService flightService, ClientService clientService, BookingService bookingService) {
         this.flightService = flightService;
@@ -132,6 +138,62 @@ public class LangChain4jTools {
         return segmentedClients.toString();
     }
 
+    @Tool("Generate and store private client profile data")
+    public String generateAndStoreClientProfile() {
+        String clientId = UUID.randomUUID().toString();
+        ClientProfile profile = generateRandomClientProfile(clientId);
+        clientProfiles.put(clientId, profile);
+        return "Generated and stored client profile with ID: " + clientId;
+    }
+
+    @Tool("Retrieve client profile by ID")
+    public String getClientProfileById(String clientId) {
+        ClientProfile profile = clientProfiles.get(clientId);
+        if (profile != null) {
+            return profile.toString();
+        } else {
+            return "Client profile not found for ID: " + clientId;
+        }
+    }
+
+    @Tool("Update or add a new client")
+    public String updateOrAddClient(String clientId, String name, String contactInfo, String preferences) {
+        Map<String, String> preferencesMap = parsePreferences(preferences);
+        ClientProfile existingProfile = clientService.getClientProfile(clientId);
+
+        if (existingProfile != null) {
+            // Update existing client
+            existingProfile.setName(name);
+            existingProfile.setContactInfo(contactInfo);
+            existingProfile.setPreferences(preferencesMap);
+            clientService.updateClientProfile(clientId, existingProfile);
+            return "Client profile updated successfully for ID: " + clientId;
+        } else {
+            // Add new client
+            ClientProfile newProfile = new ClientProfile(clientId, name, contactInfo, preferencesMap);
+            clientService.createClientProfile(clientId, newProfile);
+            return "New client profile created with ID: " + clientId;
+        }
+    }
+
+    private ClientProfile generateRandomClientProfile(String clientId) {
+        String[] firstNames = {"John", "Jane", "Michael", "Emily", "David", "Sarah"};
+        String[] lastNames = {"Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia"};
+        String[] emailDomains = {"gmail.com", "yahoo.com", "hotmail.com", "outlook.com"};
+
+        String firstName = firstNames[(int) (Math.random() * firstNames.length)];
+        String lastName = lastNames[(int) (Math.random() * lastNames.length)];
+        String email = firstName.toLowerCase() + "." + lastName.toLowerCase() + "@" + emailDomains[(int) (Math.random() * emailDomains.length)];
+
+        Map<String, String> preferences = new HashMap<>();
+        preferences.put("seatPreference", Math.random() < 0.5 ? "Window" : "Aisle");
+        preferences.put("mealPreference", Math.random() < 0.33 ? "Vegetarian" : (Math.random() < 0.66 ? "Halal" : "Regular"));
+        preferences.put("frequentFlyerNumber", "FF" + (int) (Math.random() * 1000000));
+
+        // Create the ClientProfile using the existing constructor
+        return new ClientProfile(clientId, firstName + " " + lastName, email, preferences);
+    }
+
     private Map<String, String> parseProfileData(String profileData) {
         Map<String, String> profileMap = new HashMap<>();
         String[] pairs = profileData.split(",");
@@ -145,7 +207,16 @@ public class LangChain4jTools {
     }
 
     private Map<String, String> parsePreferences(String preferences) {
-        // Implement parsing logic for preferences
-        return new HashMap<>();
+        Map<String, String> preferencesMap = new HashMap<>();
+        if (preferences != null && !preferences.isEmpty()) {
+            String[] pairs = preferences.split(",");
+            for (String pair : pairs) {
+                String[] keyValue = pair.split(":");
+                if (keyValue.length == 2) {
+                    preferencesMap.put(keyValue[0].trim(), keyValue[1].trim());
+                }
+            }
+        }
+        return preferencesMap;
     }
 }

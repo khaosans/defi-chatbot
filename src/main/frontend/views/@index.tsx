@@ -24,6 +24,7 @@ import Message, { MessageItem } from "../components/Message";
 import MessageList from "Frontend/components/MessageList";
 import CustomButton from "../components/CustomButton";
 import ClientManagementModal from "../components/ClientManagementModal";
+import { ClientProfileService } from 'Frontend/generated/endpoints';
 
 const statusIcons: { [key: string]: string } = {
   CONFIRMED: "✅",
@@ -85,6 +86,11 @@ export default function Index() {
       setBookings(mockBookings);
       setIsLoading(false);
     }, 1000); // Simulate network delay
+  }, []);
+
+  useEffect(() => {
+    // Generate sample data when the component mounts
+    ClientProfileService.generateSampleData();
   }, []);
 
   const addMessage = (message: MessageItem) => {
