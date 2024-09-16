@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Dialog } from '@vaadin/react-components/Dialog.js';
+import { Button } from '@vaadin/react-components/Button.js';
 import { Grid } from '@vaadin/react-components/Grid.js';
 import { GridColumn } from '@vaadin/react-components/GridColumn.js';
 import { ComboBox } from '@vaadin/react-components/ComboBox.js';

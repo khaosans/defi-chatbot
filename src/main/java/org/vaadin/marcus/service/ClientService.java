@@ -75,10 +75,17 @@ public class ClientService {
         }
     }
 
+<<<<<<< HEAD
     private LoyaltyStatus calculateLoyaltyStatus(int travelScore) {
         if (travelScore >= 100) return LoyaltyStatus.PLATINUM;
         if (travelScore >= 50) return LoyaltyStatus.GOLD;
         if (travelScore >= 20) return LoyaltyStatus.SILVER;
         return LoyaltyStatus.BRONZE;
+=======
+    public List<ClientProfile> getAllClients() {
+        // Implement the logic to return all client profiles
+        // This might involve fetching from a database or returning from an in-memory store
+        return new ArrayList<>(clientProfiles.values());
+>>>>>>> c8f49c5 (Update ClientProfileService, ClientManagementModal, and Index components)
     }
 }

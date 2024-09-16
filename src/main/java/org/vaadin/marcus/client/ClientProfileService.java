@@ -3,6 +3,7 @@ package org.vaadin.marcus.client;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import com.vaadin.hilla.BrowserCallable;
 import org.springframework.stereotype.Service;
+<<<<<<< HEAD
 import org.vaadin.marcus.service.ClientProfile;
 import org.vaadin.marcus.service.ClientService;
 
@@ -12,6 +13,18 @@ import java.util.List;
 @AnonymousAllowed
 @Service
 public class ClientProfileService {
+=======
+import org.vaadin.marcus.service.ClientService;
+import org.vaadin.marcus.service.ClientProfile;
+
+import java.util.List;
+
+@Service
+@BrowserCallable
+@AnonymousAllowed
+public class ClientProfileService {
+
+>>>>>>> c8f49c5 (Update ClientProfileService, ClientManagementModal, and Index components)
     private final ClientService clientService;
 
     public ClientProfileService(ClientService clientService) {
@@ -19,6 +32,7 @@ public class ClientProfileService {
     }
 
     public List<ClientProfile> getAllClients() {
+<<<<<<< HEAD
         return clientService.getAllClientProfiles();
     }
 
@@ -48,5 +62,13 @@ public class ClientProfileService {
 
     public ClientProfile getClientProfile(String clientId) {
         return clientService.getClientProfile(clientId);
+=======
+        return clientService.getAllClients();
+    }
+
+    // Add this method to generate sample data
+    public void generateSampleData() {
+        clientService.generateSampleData();
+>>>>>>> c8f49c5 (Update ClientProfileService, ClientManagementModal, and Index components)
     }
 }
