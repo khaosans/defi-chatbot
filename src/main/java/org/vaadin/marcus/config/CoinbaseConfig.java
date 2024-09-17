@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.vaadin.marcus.service.CoinbaseService;
+import org.vaadin.marcus.config.OptionalTypeAdapter; // Add this import
 
 @Configuration
 public class CoinbaseConfig {

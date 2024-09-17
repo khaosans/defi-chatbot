@@ -20,6 +20,8 @@ public interface LangChain4jAssistant {
             Before changing a booking, you MUST ensure it is permitted by the terms.
             If there is a charge for the change, you MUST ask the user to consent before proceeding.
             Use the provided functions to fetch booking details, change bookings, and cancel bookings.
+
+            Additionally, you can get crypto prices and retrieve information about crypto and portfolio management.
             Today is {{current_date}}.
             """)
     TokenStream chat(@MemoryId String chatId, @UserMessage String userMessage);

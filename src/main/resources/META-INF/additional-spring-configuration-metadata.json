@@ -1,0 +1,22 @@
+{"properties": [
+  {
+    "name": "coinbase.api.baseUrl",
+    "type": "java.lang.String",
+    "description": "A description for 'coinbase.api.baseUrl'"
+  },
+  {
+    "name": "coinbase.api.key",
+    "type": "java.lang.String",
+    "description": "A description for 'coinbase.api.key'"
+  },
+  {
+    "name": "coinbase.api.secret",
+    "type": "java.lang.String",
+    "description": "A description for 'coinbase.api.secret'"
+  },
+  {
+    "name": "coinbase.api.passphrase",
+    "type": "java.lang.String",
+    "description": "A description for 'coinbase.api.passphrase'"
+  }
+]}

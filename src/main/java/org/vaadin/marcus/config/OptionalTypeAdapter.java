@@ -18,7 +18,7 @@ public class OptionalTypeAdapter {
             if (!Optional.class.isAssignableFrom(rawType)) {
                 return null;
             }
-            final TypeAdapter<?> innerAdapter = gson.getAdapter(TypeToken.get(Optional.class.getTypeParameters()[0]));
+            final TypeAdapter<Object> innerAdapter = (TypeAdapter<Object>) gson.getAdapter(TypeToken.get(Optional.class.getTypeParameters()[0]));
             return new TypeAdapter<T>() {
                 @Override
                 public void write(JsonWriter out, T value) throws IOException {

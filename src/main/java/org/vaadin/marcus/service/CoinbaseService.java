@@ -28,11 +28,10 @@ public class CoinbaseService {
     private final String apiSecret;
     private final String apiPassphrase;
 
-    public CoinbaseService(OkHttpClient httpClient, Gson gson,
-                           @Value("${coinbase.api.baseUrl}") String baseUrl,
-                           @Value("${coinbase.api.key}") String apiKey,
-                           @Value("${coinbase.api.secret}") String apiSecret,
-                           @Value("${coinbase.api.passphrase}") String apiPassphrase) {
+    public CoinbaseService(OkHttpClient httpClient, Gson gson, @Value("${coinbase.baseUrl}") String baseUrl, 
+                           @Value("${coinbase.apiKey}") String apiKey, 
+                           @Value("${coinbase.apiSecret}") String apiSecret, 
+                           @Value("${coinbase.apiPassphrase}") String apiPassphrase) {
         this.httpClient = httpClient;
         this.gson = gson;
         this.baseUrl = baseUrl;

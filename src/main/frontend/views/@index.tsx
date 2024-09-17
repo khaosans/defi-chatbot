@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { AssistantService, BookingService } from "Frontend/generated/endpoints";
-import BookingDetails from "../generated/org/vaadin/marcus/service/BookingDetails";
+import BookingDetails from "Frontend/generated/org/vaadin/marcus/service/BookingDetails";
 import { GridColumn } from "@vaadin/react-components/GridColumn";
 import { Grid } from "@vaadin/react-components/Grid";
 import { MessageInput } from "@vaadin/react-components/MessageInput";
@@ -35,7 +35,7 @@ export default function Index() {
     setError(null);
     BookingService.getBookings()
       .then(setBookings)
-      .catch(err => setError("Failed to load bookings. Please try again."))
+      .catch((err: Error) => setError("Failed to load bookings. Please try again."))
       .finally(() => setIsLoading(false));
   }, []);
 
