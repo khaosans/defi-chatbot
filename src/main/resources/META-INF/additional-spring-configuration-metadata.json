@@ -33,5 +33,10 @@
     "name": "coinbase.api.baseUrl",
     "type": "java.lang.String",
     "description": "A description for 'coinbase.api.baseUrl'"
+  },
+  {
+    "name": "vaadin.hilla.engine.configuration",
+    "type": "java.lang.String",
+    "description": "A description for 'vaadin.hilla.engine.configuration'"
   }
 ]}

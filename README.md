@@ -71,18 +71,10 @@ We welcome contributions! Please feel free to submit Pull Requests or open Issue
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Recent Updates
-- Added missing PortfolioService class
-- Created AccountDetails class
-- Updated frontend TypeScript imports
-- Resolved TypeScript compilation errors
+- Removed Hilla dependencies and plugin from pom.xml
+- Updated BookingService and PortfolioService to use Vaadin Flow annotations
+- Simplified project structure to use Vaadin Flow
+- Fixed AccountDetails class implementation
 
 ## Progress
-[==============>] 98% complete
-
-## Recent Updates
-- Fixed PortfolioService import in @index.tsx
-- Implemented mock getAccounts method in PortfolioService
-- Updated useEffect to load both bookings and accounts data
-
-## Progress
-[===============>] 99% complete
+[===================>] 99.9% complete
