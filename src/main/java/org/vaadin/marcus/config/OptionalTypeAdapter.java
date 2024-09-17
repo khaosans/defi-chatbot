@@ -1,9 +1,13 @@
 package org.vaadin.marcus.config;
 
+import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 
+import java.io.IOException;
 import java.util.Optional;
 
 public class OptionalTypeAdapter {
@@ -11,7 +15,7 @@ public class OptionalTypeAdapter {
         @Override
         public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
             Class<T> rawType = (Class<T>) type.getRawType();
-            if (rawType != Optional.class) {
+            if (!Optional.class.isAssignableFrom(rawType)) {
                 return null;
             }
             final TypeAdapter<?> innerAdapter = gson.getAdapter(TypeToken.get(Optional.class.getTypeParameters()[0]));
