@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import { AssistantService, BookingService } from "Frontend/generated/endpoints";
+import { AssistantService, BookingService, PortfolioService } from "Frontend/generated/endpoints";
 import BookingDetails from "Frontend/generated/org/vaadin/marcus/service/BookingDetails";
-import { GridColumn } from "@vaadin/react-components/GridColumn";
-import { Grid } from "@vaadin/react-components/Grid";
-import { MessageInput } from "@vaadin/react-components/MessageInput";
-import { nanoid } from "nanoid";
-import { SplitLayout } from "@vaadin/react-components/SplitLayout";
-import Message, { MessageItem } from "../components/Message";
-import MessageList from "Frontend/components/MessageList";
+import AccountDetails from "Frontend/generated/org/vaadin/marcus/service/AccountDetails";
+import { GridColumn } from "@vaadin/react-components/GridColumn"; // Ensure this module is installed and correctly referenced
+import { Grid } from "@vaadin/react-components/Grid"; // Ensure this module is installed and correctly referenced
+import { MessageInput } from "@vaadin/react-components/MessageInput"; // Ensure this module is installed and correctly referenced
+import { nanoid } from "nanoid"; // This import is correct
+import { SplitLayout } from "@vaadin/react-components/SplitLayout"; // Ensure this module is installed and correctly referenced
+import Message, { MessageItem } from "../components/Message"; // Ensure the path is correct
+import MessageList from "Frontend/components/MessageList"; // Ensure the path is correct
 import CustomButton from "../components/CustomButton";
 
 const statusIcons: { [key: string]: string } = {
@@ -21,6 +22,7 @@ const statusIcons: { [key: string]: string } = {
 export default function Index() {
   const [chatId] = useState(nanoid());
   const [working, setWorking] = useState(false);
+  const [accounts, setAccounts] = useState<AccountDetails[]>([]);
   const [bookings, setBookings] = useState<BookingDetails[]>([]);
   const [messages, setMessages] = useState<MessageItem[]>([{
     role: 'assistant',
@@ -33,9 +35,15 @@ export default function Index() {
   useEffect(() => {
     setIsLoading(true);
     setError(null);
-    BookingService.getBookings()
-      .then(setBookings)
-      .catch((err: Error) => setError("Failed to load bookings. Please try again."))
+    Promise.all([
+      BookingService.getBookings(),
+      PortfolioService.getAccounts()
+    ])
+      .then(([bookingsData, accountsData]) => {
+        setBookings(bookingsData);
+        setAccounts(accountsData);
+      })
+      .catch((err: Error) => setError("Failed to load data. Please try again."))
       .finally(() => setIsLoading(false));
   }, []);
 

@@ -18,5 +18,20 @@
     "name": "coinbase.api.passphrase",
     "type": "java.lang.String",
     "description": "A description for 'coinbase.api.passphrase'"
+  },
+  {
+    "name": "coinbase.api.baseUrl",
+    "type": "java.lang.String",
+    "description": "A description for 'coinbase.api.baseUrl'"
+  },
+  {
+    "name": "coinbase.api.baseUrl",
+    "type": "java.lang.String",
+    "description": "A description for 'coinbase.api.baseUrl'"
+  },
+  {
+    "name": "coinbase.api.baseUrl",
+    "type": "java.lang.String",
+    "description": "A description for 'coinbase.api.baseUrl'"
   }
 ]}

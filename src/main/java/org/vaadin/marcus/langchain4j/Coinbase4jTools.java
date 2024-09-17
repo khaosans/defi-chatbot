@@ -1,33 +1,45 @@
 package org.vaadin.marcus.langchain4j;
 
-import dev.langchain4j.agent.tool.Tool;
-import org.springframework.stereotype.Component;
-import org.vaadin.marcus.service.CoinbaseService;
-import org.vaadin.marcus.service.AccountDetails;
-
+import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import org.springframework.stereotype.Component;
+import org.vaadin.marcus.service.AccountDetails;
+import org.vaadin.marcus.service.CoinbaseService;
+
+import dev.langchain4j.agent.tool.Tool;
 
 @Component
 public class Coinbase4jTools {
     
     private final CoinbaseService coinbaseService;
+    private AccountDetails cachedAccount;
+    private long lastFetchTime;
+    private static final long CACHE_DURATION = TimeUnit.MINUTES.toMillis(5); // Cache for 5 minutes
 
     public Coinbase4jTools(CoinbaseService coinbaseService) {
+        if (coinbaseService == null) {
+            throw new IllegalArgumentException("CoinbaseService cannot be null");
+        }
         this.coinbaseService = coinbaseService;
     }
-   
-    @Tool("Retrieves the total value of the portfolio in USD.")
-    public Double getPortfolioValue() {
-        return coinbaseService.getPortfolioValue();
-    }
 
-    @Tool("Retrieves the account details including individual account balances and available amounts.")
-    public List<AccountDetails> getAccountDetails() {
-        return coinbaseService.getAccountDetails();
-    }
-   
-    @Tool("Retrieves the current price of a given cryptocurrency in USD.")
-    public Double getCurrentPrice(String currency) {
-        return coinbaseService.getCurrentPrice(currency);
+    @Tool("Get account")
+    public AccountDetails getAccount() {
+        long currentTime = System.currentTimeMillis();
+        if (cachedAccount == null || (currentTime - lastFetchTime) > CACHE_DURATION) {
+            try {
+                System.out.println("Fetching fresh account from Coinbase API");
+                cachedAccount = coinbaseService.getAccounts();
+                lastFetchTime = currentTime;
+            } catch (IOException ex) {
+                System.err.println("Error fetching account: " + ex.getMessage());
+                return cachedAccount;
+            }
+        } else {
+            System.out.println("Returning cached account");
+        }
+        return cachedAccount;
     }
 }

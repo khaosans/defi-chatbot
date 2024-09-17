@@ -9,7 +9,6 @@ import org.vaadin.marcus.data.BookingStatus;
 import org.vaadin.marcus.service.BookingDetails;
 import org.vaadin.marcus.service.FlightService;
 
-
 @BrowserCallable
 @AnonymousAllowed
 @Service

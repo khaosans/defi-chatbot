@@ -69,3 +69,20 @@ We welcome contributions! Please feel free to submit Pull Requests or open Issue
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Recent Updates
+- Added missing PortfolioService class
+- Created AccountDetails class
+- Updated frontend TypeScript imports
+- Resolved TypeScript compilation errors
+
+## Progress
+[==============>] 98% complete
+
+## Recent Updates
+- Fixed PortfolioService import in @index.tsx
+- Implemented mock getAccounts method in PortfolioService
+- Updated useEffect to load both bookings and accounts data
+
+## Progress
+[===============>] 99% complete

@@ -1,75 +1,29 @@
 package org.vaadin.marcus.langchain4j;
 
-import dev.langchain4j.agent.tool.Tool;
-import org.springframework.stereotype.Component;
-import org.vaadin.marcus.service.BookingDetails;
-import org.vaadin.marcus.service.FlightService;
+import java.io.IOException;
 
-import java.time.LocalDate;
-import java.util.List;
+import org.springframework.stereotype.Component;
+import org.vaadin.marcus.service.AccountDetails;
+import org.vaadin.marcus.service.CoinbaseService;
+
+import dev.langchain4j.agent.tool.Tool;
 
 @Component
 public class LangChain4jTools {
 
-    private final FlightService service;
+    private final CoinbaseService coinbaseService;
 
-    public LangChain4jTools(FlightService service) {
-        this.service = service;
+    public LangChain4jTools(CoinbaseService coinbaseService) {
+        this.coinbaseService = coinbaseService;
     }
 
-    @Tool("""
-            Retrieves information about an existing booking,
-            such as the flight date, booking status, departure and arrival airports, and booking class.
-            """)
-    public BookingDetails getBookingDetails(String bookingNumber, String firstName, String lastName) {
-        return service.getBookingDetails(bookingNumber, firstName, lastName);
-    }
-
-    @Tool("""
-            Modifies an existing booking.
-            This includes making changes to the flight date, and the departure and arrival airports.
-            """)
-    public void changeBooking(String bookingNumber, String firstName, String lastName,
-                              LocalDate newFlightDate, String newDepartureAirport, String newArrivalAirport) {
-        service.changeBooking(bookingNumber, firstName, lastName, newFlightDate, newDepartureAirport, newArrivalAirport);
-    }
-
-    @Tool("""
-            Cancels an existing booking.
-            """)
-    public void cancelBooking(String bookingNumber, String firstName, String lastName) {
-        service.cancelBooking(bookingNumber, firstName, lastName);
-    }
-
-    //book a flight
-    @Tool("""
-        Books a flight. With only booking numer first and last name
-        """)
-    public void bookFlight(String bookingNumber, String firstName, String lastName) {
-        service.updateBooking(bookingNumber, firstName, lastName);
-    }
-
-    //get a list of available flights
-    @Tool("""
-        Retrieves a list of available bookings.
-        """)
-    public List<BookingDetails> getAvailableBookings() {
-        return service.getAvailableBookings();
-    }
-
-    // confirm booking
-    @Tool("""
-        Confirms an existing booking.
-        """)
-    public void confirmBooking(String bookingNumber, String firstName, String lastName) {
-        service.confirmBooking(bookingNumber, firstName, lastName);
-    }
-
-    //get a list of confirmed bookings
-    @Tool("""
-        Retrieves a list of confirmed bookings.
-        """)
-    public List<BookingDetails> getConfirmedBookings() {
-        return service.getConfirmedBookings();
+    @Tool("Retrieves account details.")
+    public AccountDetails getAccount() {
+        try {
+            return coinbaseService.getAccounts();
+        } catch (IOException e) {
+            System.err.println("Error fetching account: " + e.getMessage());
+            return null;
+        }
     }
 }
