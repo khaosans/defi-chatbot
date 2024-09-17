@@ -1,12 +1,15 @@
 package org.vaadin.marcus.client;
 
-import com.vaadin.flow.server.auth.AnonymousAllowed;
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.vaadin.marcus.service.AccountDetails;
 
-import java.util.List;
-import java.util.Arrays;
+import com.vaadin.flow.server.auth.AnonymousAllowed;
+import com.vaadin.hilla.BrowserCallable;
 
+@BrowserCallable
 @AnonymousAllowed
 @Service
 public class PortfolioService {

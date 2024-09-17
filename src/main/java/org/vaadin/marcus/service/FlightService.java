@@ -135,10 +135,10 @@ public class FlightService {
                 booking.getBookingNumber(),
                 booking.getCustomer().getFirstName(),
                 booking.getCustomer().getLastName(),
-                booking.getDate(),
-                booking.getBookingStatus(),
+                booking.getDate().toString(), // Convert LocalDate to String
                 booking.getFrom(),
                 booking.getTo(),
+                booking.getBookingStatus().toString(), // Convert BookingStatus to String
                 booking.getBookingClass().toString()
         );
     }

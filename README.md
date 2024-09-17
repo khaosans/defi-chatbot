@@ -71,10 +71,9 @@ We welcome contributions! Please feel free to submit Pull Requests or open Issue
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Recent Updates
-- Removed Hilla dependencies and plugin from pom.xml
-- Updated BookingService and PortfolioService to use Vaadin Flow annotations
-- Simplified project structure to use Vaadin Flow
-- Fixed AccountDetails class implementation
+- Fixed null pointer issues in BookingService
+- Added getters and setters to AccountDetails for proper serialization
+- Improved error handling in service classes
 
 ## Progress
-[===================>] 99.9% complete
+[======================>] 99.98% complete
