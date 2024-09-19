@@ -21,16 +21,4 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowCredentials(true);
     }
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .authorizeHttpRequests((authorize) -> authorize
-                .requestMatchers("/logout").permitAll() // Allow access to logout
-                .anyRequest().authenticated()
-            )
-            .logout((logout) -> logout
-                .logoutSuccessUrl("/") // Redirect after logout
-            );
-        return http.build();
-    }
 }

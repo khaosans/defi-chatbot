@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 public class CoinbaseConfig {
 
-    @Value("${coinbase.api.baseUrl}")
+    @Value("${coinbase.api.baseUrl}:")
     private String baseUrl;
 
     @Value("${coinbase.api.key}")
