@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.http.ResponseEntity; // Import ResponseEntity
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.vaadin.marcus.service.UserService; // Assuming you have a UserService for authentication
 
@@ -64,5 +65,11 @@ public class LoginController {
         // }
 
         return ResponseEntity.ok().build(); // Return a success response
+    }
+
+    @GetMapping("/logout")
+    public String logout() {
+        // Logic to handle logout, e.g., invalidating the session
+        return "redirect:/"; // Redirect to the home page or login page after logout
     }
 }
