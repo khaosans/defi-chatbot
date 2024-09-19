@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "Frontend/themes/customer-support-agent/styles.css";
 
-const Header: React.FC = () => {
+interface HeaderProps {
+  children?: ReactNode;
+}
+
+const Header: React.FC<HeaderProps> = ({ children }) => {
     const navigate = useNavigate();
 
     const handleLogout = async () => {
