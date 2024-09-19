@@ -2,24 +2,11 @@ import { useEffect, useState } from "react";
 import { AssistantService, BookingService, PortfolioService } from "Frontend/generated/endpoints";
 import BookingDetails from "Frontend/generated/org/vaadin/marcus/service/BookingDetails";
 import AccountDetails from "Frontend/generated/org/vaadin/marcus/service/AccountDetails";
-import { GridColumn } from "@vaadin/react-components/GridColumn"; // Ensure this module is installed and correctly referenced
-import { Grid } from "@vaadin/react-components/Grid"; // Ensure this module is installed and correctly referenced
 import { MessageInput } from "@vaadin/react-components/MessageInput"; // Ensure this module is installed and correctly referenced
 import { nanoid } from "nanoid"; // This import is correct
-import { SplitLayout } from "@vaadin/react-components/SplitLayout"; // Ensure this module is installed and correctly referenced
 import { MessageItem } from "../components/Message"; // Ensure the path is correct
 import MessageList from "Frontend/components/MessageList"; // Ensure the path is correct
-import CustomButton from "../components/CustomButton";
-import Header from "../components/Header"; // Import the Header component
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom"; // Change Switch to Routes
-
-const statusIcons: { [key: string]: string } = {
-  CONFIRMED: "✅",
-  COMPLETED: "🏁",
-  CANCELLED: "❌",
-  AWAITING_CONFIRMATION: "⏳",
-  AVAILABLE: "🟢"
-};
+import "Frontend/themes/customer-support-agent/styles.css"; // Import the custom styles
 
 export default function Index() {
   const [chatId] = useState(nanoid());
@@ -30,7 +17,6 @@ export default function Index() {
     role: 'assistant',
     content: 'Welcome to Funnair! How can I help you?'
   }]);
-  const [showConfirmed, setShowConfirmed] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -81,34 +67,6 @@ export default function Index() {
       .onComplete(() => setWorking(false));
   };
 
-  const renderStatus = (booking: BookingDetails) => {
-    const status = booking.bookingStatus;
-    return statusIcons[status as keyof typeof statusIcons] || status;
-  };
-
-  const awaitingConfirmationBookings = bookings.filter(booking => booking.bookingStatus === "AWAITING_CONFIRMATION");
-  const availableFlights = bookings.filter(booking => booking.bookingStatus === "AVAILABLE");
-  const confirmedBookings = bookings.filter(booking => booking.bookingStatus === "CONFIRMED");
-
-  const renderBookingGrid = (items: BookingDetails[], showNames: boolean = true) => (
-    <Grid items={items} className="flex-shrink-0">
-      <GridColumn path="bookingNumber" header="#" autoWidth/>
-      {showNames && (
-        <>
-          <GridColumn path="firstName" autoWidth/>
-          <GridColumn path="lastName" autoWidth/>
-        </>
-      )}
-      <GridColumn path="date" autoWidth/>
-      <GridColumn path="from" autoWidth/>
-      <GridColumn path="to" autoWidth/>
-      <GridColumn header="Status" autoWidth>
-        {({ item }) => renderStatus(item)}
-      </GridColumn>
-      <GridColumn path="bookingClass" autoWidth/>
-    </Grid>
-  );
-
   if (isLoading) {
     return <div className="flex justify-center items-center h-full">Loading...</div>;
   }
@@ -118,40 +76,21 @@ export default function Index() {
   }
 
   return (
-    <div>
-      <Header /> {/* Include the header here */}
-      <SplitLayout className="h-full">
-        <div className="flex flex-col gap-4 p-4 box-border h-full w-full md:w-1/4 bg-gray-100">
-          <h2 className="text-2xl font-bold text-blue-600 border-b-2 border-blue-300 pb-2">Funnair Chat Support</h2>
-          <MessageList messages={messages} className="flex-grow overflow-auto bg-white rounded-lg shadow-md p-4"/>
-          <MessageInput 
-            onSubmit={e => sendMessage(e.detail.value)} 
-            className="px-4 py-2 rounded-lg shadow-md" 
-            disabled={working}
-          />
-        </div>
-        <div className="flex flex-col gap-6 p-6 box-border overflow-auto w-full md:w-3/4 bg-gray-50">
-          <h2 className="text-3xl font-bold text-blue-700 border-b-2 border-blue-300 pb-2">Flight Management Dashboard</h2>
-          <section className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow duration-300">
-            <h3 className="text-xl font-semibold mb-3 text-blue-600">Bookings Awaiting Confirmation</h3>
-            {renderBookingGrid(awaitingConfirmationBookings)}
-          </section>
-          <section className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow duration-300">
-            <h3 className="text-xl font-semibold mb-3 text-blue-600">Available Flight Options</h3>
-            {renderBookingGrid(availableFlights, false)}
-          </section>
-          <section className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow duration-300">
-            <CustomButton onClick={() => setShowConfirmed(!showConfirmed)} className="mb-3">
-              {showConfirmed ? 'Hide' : 'Show'} Confirmed Bookings ({confirmedBookings.length})
-            </CustomButton>
-            {showConfirmed && (
-              confirmedBookings.length > 0 
-                ? renderBookingGrid(confirmedBookings)
-                : <p className="text-gray-600 italic">No confirmed bookings available at this time.</p>
-            )}
-          </section>
-        </div>
-      </SplitLayout>
+    <div className="index-container">
+      <div className="index-header">
+        <h3>Funnair Support</h3>
+      </div>
+      <div className="index-message-list">
+        <MessageList messages={messages} className="flex-grow overflow-auto"/>
+      </div>
+      <div className="index-message-input">
+        <MessageInput 
+          onSubmit={e => sendMessage(e.detail.value)} 
+          className="mt-4" // Margin top for spacing
+          disabled={working}
+          style={{ height: '100px' }}
+        />
+      </div>
     </div>
   );
 }
