@@ -1,8 +1,8 @@
 import React from 'react';
 // Check if ChatHistory.tsx exists in the same directory
-import ChatHistory from './ChatHistory'; // Ensure this path is correct
+import ChatHistory from './ChatHistoryView'; // Ensure this path is correct
 // Check if ChatComponent.tsx exists in the same directory
-import ChatComponent from './ChatComponent'; // Ensure this path is correct
+import ChatComponent from './ChatComponentView'; // Ensure this path is correct
 import Logout from './Logout'; // Import the Logout component
 
 const MainLayout: React.FC = () => {
