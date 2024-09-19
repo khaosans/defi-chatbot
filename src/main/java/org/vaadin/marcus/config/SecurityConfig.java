@@ -1,4 +1,4 @@
-package org.vaadin.marcus.langchain4j;
+package org.vaadin.marcus.config;
 
 import org.springframework.context.annotation.Bean;
 
