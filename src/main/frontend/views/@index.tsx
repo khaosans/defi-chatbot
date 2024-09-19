@@ -1,85 +1,134 @@
 import { useEffect, useState } from "react";
-import { AssistantService, BookingService } from "Frontend/generated/endpoints";
-import BookingDetails from "../generated/org/vaadin/marcus/service/BookingDetails";
-import { GridColumn } from "@vaadin/react-components/GridColumn";
-import { Grid } from "@vaadin/react-components/Grid";
+import { BookingService, PortfolioService, AssistantService } from "Frontend/generated/endpoints";
+import BookingDetails from "Frontend/generated/org/vaadin/marcus/service/BookingDetails";
+import AccountDetails from "Frontend/generated/org/vaadin/marcus/service/AccountDetails";
 import { MessageInput } from "@vaadin/react-components/MessageInput";
 import { nanoid } from "nanoid";
-import { SplitLayout } from "@vaadin/react-components/SplitLayout";
-import Message, { MessageItem } from "../components/Message";
+import { MessageItem } from "../components/Message";
 import MessageList from "Frontend/components/MessageList";
-import MainLayout from "Frontend/views/MainLayout";
+import "Frontend/themes/customer-support-agent/styles.css";
+import Header from "Frontend/components/Header";
+import ChatHistory from "Frontend/components/ChatHistory";
+
+// Remove AssistantService from the component logic
+// Replace it with a mock function for now
+const mockAssistantService = {
+  chat: (chatId: string, message: string) => ({
+    onNext: (callback: (token: string) => void) => {
+      callback("This is a mock response.");
+      return { onError: (p0: () => void) => {}, onComplete: () => {} };
+    },
+  }),
+};
 
 export default function Index() {
-  const [chatId, setChatId] = useState(nanoid());
+  const [chatId] = useState(nanoid());
   const [working, setWorking] = useState(false);
+  const [accounts, setAccounts] = useState<AccountDetails[]>([]);
   const [bookings, setBookings] = useState<BookingDetails[]>([]);
   const [messages, setMessages] = useState<MessageItem[]>([{
     role: 'assistant',
-    content: 'Welcome to SourBot Labs?'
+    content: 'Welcome to Funnair! How can I help you?'
   }]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [chatSessions, setChatSessions] = useState<{ id: string; title: string }[]>([
+    { id: chatId, title: "Current Chat" },
+  ]);
+  const [theme, setTheme] = useState('light');
 
   useEffect(() => {
-    if (!working) {
-      BookingService.getBookings().then(setBookings);
-    }
-  }, [working]);
+    setIsLoading(true);
+    setError(null);
+    Promise.all([
+      BookingService.getBookings(),
+      PortfolioService.getAccounts()
+    ])
+      .then(([bookingsData, accountsData]) => {
+        setBookings(bookingsData);
+        setAccounts(accountsData);
+      })
+      .catch((err: Error) => setError("Failed to load data. Please try again."))
+      .finally(() => setIsLoading(false));
+  }, []);
 
-  function addMessage(message: MessageItem) {
+  const addMessage = (message: MessageItem) => {
     setMessages(messages => [...messages, message]);
-  }
+  };
 
-  function appendToLatestMessage(chunk: string) {
+  const appendToLatestMessage = (chunk: string) => {
     setMessages(messages => {
       const latestMessage = messages[messages.length - 1];
       latestMessage.content += chunk;
       return [...messages.slice(0, -1), latestMessage];
     });
-  }
+  };
 
-  async function sendMessage(message: string) {
+  const sendMessage = async (message: string) => {
     setWorking(true);
-    addMessage({
-      role: 'user',
-      content: message
-    });
+    addMessage({ role: 'user', content: message });
     let first = true;
     AssistantService.chat(chatId, message)
-        .onNext(token => {
-          if (first && token) {
-            addMessage({
-              role: 'assistant',
-              content: token
-            });
-            first = false;
-          } else {
-            appendToLatestMessage(token);
-          }
-        })
-        .onError(() => setWorking(false))
-        .onComplete(() => setWorking(false));
+      .onNext((token: string) => {
+        if (first && token) {
+          addMessage({ role: 'assistant', content: token });
+          first = false;
+        } else {
+          appendToLatestMessage(token);
+        }
+      })
+      .onError(() => {
+        setError("Failed to send message. Please try again.");
+        setWorking(false);
+      })
+   
+  };
+
+  const handleSelectSession = (id: string) => {
+    // TODO: Implement session switching logic
+    console.log(`Switching to session ${id}`);
+  };
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+    document.body.setAttribute('data-theme', newTheme);
+  };
+
+  // Apply theme on component mount
+  useEffect(() => {
+    document.body.setAttribute('data-theme', theme);
+  }, []);
+
+  if (isLoading) {
+    return <div className="flex justify-center items-center h-full">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="flex justify-center items-center h-full text-red-500">{error}</div>;
   }
 
   return (
-      <MainLayout>
-        <div className="index-container" >
-          <div className="sidebar" style={{ width: '500px' }}>
-            <h3>Chat History</h3>
-            <div className="chat-history">
-              <ul>
-                {messages.map((message, index) => (
-                    <li key={index}>
-                      <strong>{message.role}:</strong> {message.content}
-                    </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-          <div className="main-content relative h-32 w-32 ...">
-              <MessageList messages={messages} className="index-message-list"/>
-              <MessageInput onSubmit={e => sendMessage(e.detail.value)} className="index-message-input "/>
-          </div>
+    <div className="index-container">
+      <div className="sidebar">
+        <ChatHistory sessions={chatSessions} onSelectSession={handleSelectSession} />
+      </div>
+      <div className="main-content">
+        <Header>
+          <button onClick={toggleTheme} className="theme-toggle-button">
+            {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
+          </button>
+        </Header>
+        <div className="message-container">
+          <MessageList messages={messages} />
         </div>
-      </MainLayout>
+        <div className="input-container">
+          <MessageInput 
+            onSubmit={e => sendMessage(e.detail.value)} 
+            disabled={working}
+          />
+        </div>
+      </div>
+    </div>
   );
 }
