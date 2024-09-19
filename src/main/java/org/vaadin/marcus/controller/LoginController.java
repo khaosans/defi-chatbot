@@ -52,24 +52,4 @@ public class LoginController {
     public String getUserFromSession(String sessionId) {
         return sessionCache.get(sessionId); // Retrieve user from session cache
     }
-
-    @PostMapping("/api/logout")
-    public ResponseEntity<?> logout() {
-        // Clear the security context
-        SecurityContextHolder.clearContext();
-        
-        // Optionally, you can also invalidate the session if using HttpSession
-        // HttpSession session = request.getSession(false);
-        // if (session != null) {
-        //     session.invalidate();
-        // }
-
-        return ResponseEntity.ok().build(); // Return a success response
-    }
-
-    @GetMapping("/logout")
-    public String logout() {
-        // Logic to handle logout, e.g., invalidating the session
-        return "redirect:/"; // Redirect to the home page or login page after logout
-    }
 }
