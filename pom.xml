@@ -18,7 +18,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.3</version>
+        <version>3.3.4</version>
     </parent>
 
     <dependencyManagement>
@@ -127,6 +127,7 @@
                 <version>${vaadin.version}</version>
                 <executions>
                     <execution>
+                        <?m2e execute onConfiguration,onIncremental?>
                         <goals>
                             <goal>prepare-frontend</goal>
                         </goals>

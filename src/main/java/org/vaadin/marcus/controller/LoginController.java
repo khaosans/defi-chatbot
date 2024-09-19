@@ -3,21 +3,15 @@ package org.vaadin.marcus.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.http.ResponseEntity; // Import ResponseEntity
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.vaadin.marcus.service.UserService; // Assuming you have a UserService for authentication
 
 @Controller
 public class LoginController {
 
     private final Map<String, String> sessionCache = new HashMap<>(); // Simple in-memory cache
-    private final UserService userService;
 
     public LoginController(UserService userService) {
-        this.userService = userService;
     }
 
     public boolean login(String username, String password) {
