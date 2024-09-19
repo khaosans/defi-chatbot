@@ -1,22 +1,15 @@
 package org.vaadin.marcus.views;
 
-
-import org.vaadin.marcus.controllers.LoginController;
-
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.router.Route; // Import the LoginController
+import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.VaadinSession;
 
 @Route("logout")
-public class LogoutView extends VerticalLayout {
-    private final LoginController loginController;
+public class LogoutView extends Div {
 
-    public LogoutView(LoginController loginController) {
-        this.loginController = loginController;
-        // Invalidate session or perform logout logic here
-        // For example, clear user session or tokens
-        
-
-        // Redirect to the login page
-        getUI().ifPresent(ui -> ui.navigate("login"));
+    public LogoutView() {
+        VaadinSession.getCurrent().getSession().invalidate();
+        VaadinSession.getCurrent().close();
+        getUI().ifPresent(ui -> ui.getPage().setLocation("/login"));
     }
 }

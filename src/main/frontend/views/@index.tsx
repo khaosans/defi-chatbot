@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import { AssistantService, BookingService, PortfolioService } from "Frontend/generated/endpoints";
 import BookingDetails from "Frontend/generated/org/vaadin/marcus/service/BookingDetails";
 import AccountDetails from "Frontend/generated/org/vaadin/marcus/service/AccountDetails";
-import { MessageInput } from "@vaadin/react-components/MessageInput"; // Ensure this module is installed and correctly referenced
-import { nanoid } from "nanoid"; // This import is correct
-import { MessageItem } from "../components/Message"; // Ensure the path is correct
-import MessageList from "Frontend/components/MessageList"; // Ensure the path is correct
-import "Frontend/themes/customer-support-agent/styles.css"; // Import the custom styles
+import { MessageInput } from "@vaadin/react-components/MessageInput";
+import { nanoid } from "nanoid";
+import { MessageItem } from "../components/Message";
+import MessageList from "Frontend/components/MessageList";
+import "Frontend/themes/customer-support-agent/styles.css";
+import Header from "Frontend/components/Header";
 
 export default function Index() {
   const [chatId] = useState(nanoid());
@@ -52,7 +53,7 @@ export default function Index() {
     addMessage({ role: 'user', content: message });
     let first = true;
     AssistantService.chat(chatId, message)
-      .onNext(token => {
+      .onNext((token: string) => {
         if (first && token) {
           addMessage({ role: 'assistant', content: token });
           first = false;
@@ -77,18 +78,14 @@ export default function Index() {
 
   return (
     <div className="index-container">
-      <div className="index-header">
-        <h3>Funnair Support</h3>
-      </div>
+      <Header />
       <div className="index-message-list">
-        <MessageList messages={messages} className="flex-grow overflow-auto"/>
+        <MessageList messages={messages} />
       </div>
       <div className="index-message-input">
         <MessageInput 
           onSubmit={e => sendMessage(e.detail.value)} 
-          className="mt-4" // Margin top for spacing
           disabled={working}
-          style={{ height: '100px' }}
         />
       </div>
     </div>
