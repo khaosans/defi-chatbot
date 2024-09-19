@@ -52,8 +52,13 @@
         <!-- LangChain4j dependencies -->
         <dependency>
             <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-core</artifactId>
+            <version>0.34.0</version> <!-- Update to the correct version -->
+        </dependency>
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
             <artifactId>langchain4j-spring-boot-starter</artifactId>
-            <version>${langchain4j.version}</version>
+            <version>0.34.0</version> <!-- Update to the correct version -->
         </dependency>
         <dependency>
             <groupId>dev.langchain4j</groupId>
