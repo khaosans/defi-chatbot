@@ -3,12 +3,14 @@ import React from 'react';
 import ChatHistory from './ChatHistory'; // Ensure this path is correct
 // Check if ChatComponent.tsx exists in the same directory
 import ChatComponent from './ChatComponent'; // Ensure this path is correct
+import Logout from './Logout'; // Import the Logout component
 
 const MainLayout: React.FC = () => {
   return (
     <div className="main-layout">
       <div className="sidebar">
         <ChatHistory />
+        <Logout /> {/* Add the Logout button here */}
       </div>
       <div className="chat-area">
         <ChatComponent />

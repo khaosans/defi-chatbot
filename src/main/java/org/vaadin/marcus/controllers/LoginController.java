@@ -3,8 +3,10 @@ package org.vaadin.marcus.controllers;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.http.ResponseEntity; // Import ResponseEntity
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.vaadin.marcus.service.UserService; // Assuming you have a UserService for authentication
 
 @Controller
@@ -50,8 +52,17 @@ public class LoginController {
         return sessionCache.get(sessionId); // Retrieve user from session cache
     }
 
-    public void logout() {
+    @PostMapping("/api/logout")
+    public ResponseEntity<?> logout() {
+        // Clear the security context
         SecurityContextHolder.clearContext();
-        SecurityContextHolder.getContext().setAuthentication(null);
+        
+        // Optionally, you can also invalidate the session if using HttpSession
+        // HttpSession session = request.getSession(false);
+        // if (session != null) {
+        //     session.invalidate();
+        // }
+
+        return ResponseEntity.ok().build(); // Return a success response
     }
 }
