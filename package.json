@@ -16,8 +16,7 @@
     "@vaadin/hilla-react-signals": "24.4.2",
     "@vaadin/polymer-legacy-adapter": "24.4.0",
     "@vaadin/react-components": "24.4.0",
-    "@vaadin/router": "^1.7.5",
-    "@vaadin/vaadin": "^14.12.1",
+    "@vaadin/router": "1.7.5",
     "@vaadin/vaadin-development-mode-detector": "2.0.7",
     "@vaadin/vaadin-lumo-styles": "24.4.0",
     "@vaadin/vaadin-material-styles": "24.4.0",
@@ -25,14 +24,12 @@
     "@vaadin/vaadin-usage-statistics": "2.1.2",
     "construct-style-sheets-polyfill": "3.1.0",
     "date-fns": "2.29.3",
-    "ethers": "^6.13.2",
     "lit": "3.1.4",
     "nanoid": "^5.0.6",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
     "react-markdown": "^9.0.1",
-    "react-router-dom": "^6.23.1",
-    "web3modal": "^1.9.12"
+    "react-router-dom": "^6.23.1"
   },
   "devDependencies": {
     "@babel/preset-react": "7.24.7",
@@ -49,7 +46,7 @@
     "@vaadin/hilla-generator-plugin-push": "24.4.2",
     "@vaadin/hilla-generator-plugin-subtypes": "24.4.2",
     "@vaadin/hilla-generator-utils": "24.4.2",
-    "@vitejs/plugin-react": "^4.3.1",
+    "@vitejs/plugin-react": "4.3.1",
     "async": "3.2.5",
     "glob": "10.4.1",
     "rollup-plugin-brotli": "3.1.0",
@@ -57,7 +54,7 @@
     "strip-css-comments": "5.0.0",
     "transform-ast": "2.4.4",
     "typescript": "5.4.5",
-    "vite": "^5.4.6",
+    "vite": "5.3.1",
     "vite-plugin-checker": "0.6.4",
     "workbox-build": "7.1.1",
     "workbox-core": "7.1.0",
@@ -120,8 +117,7 @@
       "workbox-core": "7.1.0",
       "workbox-precaching": "7.1.0"
     },
-    "hash": "e0b7c3732f5c2c03599aebeae98bfc35099a0da6a392b0cab53a5eda3bac33e1"
-
+    "hash": "5acc886e377f41898fa30d5b3a8cca02ec6e34bb6829a4293f7eddf478a8ca01"
   },
   "overrides": {
     "@vaadin/bundles": "$@vaadin/bundles",
@@ -150,9 +146,6 @@
     "date-fns": "$date-fns",
     "@vaadin/vaadin-themable-mixin": "$@vaadin/vaadin-themable-mixin",
     "@vaadin/vaadin-lumo-styles": "$@vaadin/vaadin-lumo-styles",
-    "@vaadin/vaadin-material-styles": "$@vaadin/vaadin-material-styles",
-    "ethers": "$ethers",
-    "web3modal": "$web3modal",
-    "@vaadin/vaadin": "$@vaadin/vaadin"
+    "@vaadin/vaadin-material-styles": "$@vaadin/vaadin-material-styles"
   }
 }
