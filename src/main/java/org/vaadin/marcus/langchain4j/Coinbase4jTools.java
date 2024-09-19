@@ -1,7 +1,6 @@
 package org.vaadin.marcus.langchain4j;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.stereotype.Component;
@@ -25,8 +24,19 @@ public class Coinbase4jTools {
         this.coinbaseService = coinbaseService;
     }
 
+    // Mock authentication method
+    private boolean mockAuthenticate() {
+        // Simulate successful authentication
+        return true; // Change this logic as needed for your mock
+    }
+
     @Tool("Get account")
     public AccountDetails getAccount() {
+        if (!mockAuthenticate()) {
+            System.err.println("Authentication failed");
+            return null; // Or handle as needed
+        }
+        
         long currentTime = System.currentTimeMillis();
         if (cachedAccount == null || (currentTime - lastFetchTime) > CACHE_DURATION) {
             try {

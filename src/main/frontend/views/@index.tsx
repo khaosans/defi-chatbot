@@ -7,9 +7,11 @@ import { Grid } from "@vaadin/react-components/Grid"; // Ensure this module is i
 import { MessageInput } from "@vaadin/react-components/MessageInput"; // Ensure this module is installed and correctly referenced
 import { nanoid } from "nanoid"; // This import is correct
 import { SplitLayout } from "@vaadin/react-components/SplitLayout"; // Ensure this module is installed and correctly referenced
-import Message, { MessageItem } from "../components/Message"; // Ensure the path is correct
+import { MessageItem } from "../components/Message"; // Ensure the path is correct
 import MessageList from "Frontend/components/MessageList"; // Ensure the path is correct
 import CustomButton from "../components/CustomButton";
+import Header from "../components/Header"; // Import the Header component
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom"; // Change Switch to Routes
 
 const statusIcons: { [key: string]: string } = {
   CONFIRMED: "✅",
@@ -116,37 +118,40 @@ export default function Index() {
   }
 
   return (
-    <SplitLayout className="h-full">
-      <div className="flex flex-col gap-4 p-4 box-border h-full w-full md:w-1/4 bg-gray-100">
-        <h2 className="text-2xl font-bold text-blue-600 border-b-2 border-blue-300 pb-2">Funnair Chat Support</h2>
-        <MessageList messages={messages} className="flex-grow overflow-auto bg-white rounded-lg shadow-md p-4"/>
-        <MessageInput 
-          onSubmit={e => sendMessage(e.detail.value)} 
-          className="px-4 py-2 rounded-lg shadow-md" 
-          disabled={working}
-        />
-      </div>
-      <div className="flex flex-col gap-6 p-6 box-border overflow-auto w-full md:w-3/4 bg-gray-50">
-        <h2 className="text-3xl font-bold text-blue-700 border-b-2 border-blue-300 pb-2">Flight Management Dashboard</h2>
-        <section className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow duration-300">
-          <h3 className="text-xl font-semibold mb-3 text-blue-600">Bookings Awaiting Confirmation</h3>
-          {renderBookingGrid(awaitingConfirmationBookings)}
-        </section>
-        <section className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow duration-300">
-          <h3 className="text-xl font-semibold mb-3 text-blue-600">Available Flight Options</h3>
-          {renderBookingGrid(availableFlights, false)}
-        </section>
-        <section className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow duration-300">
-          <CustomButton onClick={() => setShowConfirmed(!showConfirmed)} className="mb-3">
-            {showConfirmed ? 'Hide' : 'Show'} Confirmed Bookings ({confirmedBookings.length})
-          </CustomButton>
-          {showConfirmed && (
-            confirmedBookings.length > 0 
-              ? renderBookingGrid(confirmedBookings)
-              : <p className="text-gray-600 italic">No confirmed bookings available at this time.</p>
-          )}
-        </section>
-      </div>
-    </SplitLayout>
+    <div>
+      <Header /> {/* Include the header here */}
+      <SplitLayout className="h-full">
+        <div className="flex flex-col gap-4 p-4 box-border h-full w-full md:w-1/4 bg-gray-100">
+          <h2 className="text-2xl font-bold text-blue-600 border-b-2 border-blue-300 pb-2">Funnair Chat Support</h2>
+          <MessageList messages={messages} className="flex-grow overflow-auto bg-white rounded-lg shadow-md p-4"/>
+          <MessageInput 
+            onSubmit={e => sendMessage(e.detail.value)} 
+            className="px-4 py-2 rounded-lg shadow-md" 
+            disabled={working}
+          />
+        </div>
+        <div className="flex flex-col gap-6 p-6 box-border overflow-auto w-full md:w-3/4 bg-gray-50">
+          <h2 className="text-3xl font-bold text-blue-700 border-b-2 border-blue-300 pb-2">Flight Management Dashboard</h2>
+          <section className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow duration-300">
+            <h3 className="text-xl font-semibold mb-3 text-blue-600">Bookings Awaiting Confirmation</h3>
+            {renderBookingGrid(awaitingConfirmationBookings)}
+          </section>
+          <section className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow duration-300">
+            <h3 className="text-xl font-semibold mb-3 text-blue-600">Available Flight Options</h3>
+            {renderBookingGrid(availableFlights, false)}
+          </section>
+          <section className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow duration-300">
+            <CustomButton onClick={() => setShowConfirmed(!showConfirmed)} className="mb-3">
+              {showConfirmed ? 'Hide' : 'Show'} Confirmed Bookings ({confirmedBookings.length})
+            </CustomButton>
+            {showConfirmed && (
+              confirmedBookings.length > 0 
+                ? renderBookingGrid(confirmedBookings)
+                : <p className="text-gray-600 italic">No confirmed bookings available at this time.</p>
+            )}
+          </section>
+        </div>
+      </SplitLayout>
+    </div>
   );
 }

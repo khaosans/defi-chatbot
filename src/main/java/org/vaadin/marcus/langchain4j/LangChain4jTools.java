@@ -26,4 +26,11 @@ public class LangChain4jTools {
             return null;
         }
     }
+
+    // Update the default password method
+    @Tool("Creates a default user password.")
+    public String createDefaultPassword() {
+        String defaultPassword = "password"; // Set your default password here
+        return defaultPassword;
+    }
 }
