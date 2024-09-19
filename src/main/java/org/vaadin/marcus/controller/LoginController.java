@@ -1,4 +1,4 @@
-package org.vaadin.marcus.controllers;
+package org.vaadin.marcus.controller;
 
 import java.util.HashMap;
 import java.util.Map;

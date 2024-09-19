@@ -1,6 +1,6 @@
 package org.vaadin.marcus.views;
 
-import org.vaadin.marcus.controllers.LoginController; // Import the LoginController
+import org.vaadin.marcus.controller.LoginController;
 import org.vaadin.marcus.langchain4j.LangChain4jTools;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox; // Import Checkbox
