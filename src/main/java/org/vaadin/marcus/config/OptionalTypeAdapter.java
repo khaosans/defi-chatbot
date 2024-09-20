@@ -13,7 +13,7 @@ import com.google.gson.stream.JsonWriter;
 
 public class OptionalTypeAdapter implements TypeAdapterFactory {
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
         if (!Optional.class.isAssignableFrom(type.getRawType())) {

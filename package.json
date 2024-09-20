@@ -16,7 +16,7 @@
     "@vaadin/hilla-react-signals": "24.4.2",
     "@vaadin/polymer-legacy-adapter": "24.4.0",
     "@vaadin/react-components": "24.4.0",
-    "@vaadin/router": "1.7.5",
+    "@vaadin/router": "^1.7.5",
     "@vaadin/vaadin-development-mode-detector": "2.0.7",
     "@vaadin/vaadin-lumo-styles": "24.4.0",
     "@vaadin/vaadin-material-styles": "24.4.0",
@@ -29,7 +29,7 @@
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-markdown": "^9.0.1",
-    "react-router-dom": "6.23.1"
+    "react-router-dom": "^6.23.1"
   },
   "devDependencies": {
     "@babel/preset-react": "7.24.7",
@@ -46,7 +46,7 @@
     "@vaadin/hilla-generator-plugin-push": "24.4.2",
     "@vaadin/hilla-generator-plugin-subtypes": "24.4.2",
     "@vaadin/hilla-generator-utils": "24.4.2",
-    "@vitejs/plugin-react": "4.3.1",
+    "@vitejs/plugin-react": "^4.3.1",
     "async": "3.2.5",
     "glob": "10.4.1",
     "rollup-plugin-brotli": "3.1.0",
@@ -54,7 +54,7 @@
     "strip-css-comments": "5.0.0",
     "transform-ast": "2.4.4",
     "typescript": "5.4.5",
-    "vite": "5.3.1",
+    "vite": "^5.4.6",
     "vite-plugin-checker": "0.6.4",
     "workbox-build": "7.1.1",
     "workbox-core": "7.1.0",
@@ -117,7 +117,7 @@
       "workbox-core": "7.1.0",
       "workbox-precaching": "7.1.0"
     },
-    "hash": "454458b619872efd750fcf026747d28fb7fe8ef73cf436960128231dd6792871"
+    "hash": "319cf0ec43e1a69a5d4efe36870e77e749878acfb9c778d6f609a427dd53babe"
   },
   "overrides": {
     "@vaadin/bundles": "$@vaadin/bundles",

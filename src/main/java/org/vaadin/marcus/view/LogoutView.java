@@ -1,4 +1,4 @@
-package org.vaadin.marcus.views;
+package org.vaadin.marcus.view;
 
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.router.Route;
