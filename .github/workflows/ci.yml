@@ -22,7 +22,7 @@ jobs:
 
       - name: Build with Maven
         run: |
-          mvn clean
+          mvn clean install
           mvn vaadin:prepare-frontend
 
       - name: Run unit tests
