@@ -1,6 +1,7 @@
 package org.vaadin.marcus.data;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class Booking {
 
@@ -12,6 +13,7 @@ public class Booking {
     private String to;
     private BookingStatus bookingStatus;
     private BookingClass bookingClass;
+    private List<Booking> legs;
 
     public Booking(String bookingNumber, LocalDate date, Customer customer, BookingStatus bookingStatus, String from, String to, BookingClass bookingClass) {
         this.bookingNumber = bookingNumber;
@@ -86,5 +88,13 @@ public class Booking {
 
     public void setBookingClass(BookingClass bookingClass) {
         this.bookingClass = bookingClass;
+    }
+
+    public List<Booking> getLegs() {
+        return legs;
+    }
+
+    public void setLegs(List<Booking> legs) {
+        this.legs = legs;
     }
 }

@@ -2,6 +2,8 @@ package org.vaadin.marcus.service;
 
 import org.springframework.stereotype.Service;
 import org.vaadin.marcus.data.*;
+import org.vaadin.marcus.langchain4j.LangChain4jTools;
+import org.vaadin.marcus.model.TokenBalance;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -9,6 +11,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.Map;
 
 @Service
 public class FlightService {
@@ -17,8 +21,10 @@ public class FlightService {
     private Set<String> usedFlightNumbers = new HashSet<>();
     private Random random = new Random();
     private List<String> airlineCodes = List.of("FA", "AA", "VA", "BA", "LH", "UA");
+    private final LangChain4jTools langChain4jTools;
 
-    public FlightService() {
+    public FlightService(LangChain4jTools langChain4jTools) {
+        this.langChain4jTools = langChain4jTools;
         db = new BookingData();
 
         initDemoData();
@@ -52,7 +58,7 @@ public class FlightService {
             bookings.add(booking);
         }
 
-        //generate some available bookings
+        // Generate some available bookings
         for(int i = 0; i < 30; i++){
             String from = airportCodes.get(random.nextInt(airportCodes.size()));
             String to = airportCodes.get(random.nextInt(airportCodes.size()));
@@ -122,7 +128,7 @@ public class FlightService {
         db.updateBooking(booking);
     }
 
-    //get booking froom flight number
+    // Get booking from flight number
     public Booking getBookingFromFlightNumber(String flightNumber){
         return db.getBookings().stream()
                 .filter(b -> b.getBookingNumber().equalsIgnoreCase(flightNumber))
@@ -157,11 +163,71 @@ public class FlightService {
         return airline + number;
     }
 
-    //get a list of confirmed bookings
+    // Get a list of confirmed bookings
     public List<BookingDetails> getConfirmedBookings() {
         return db.getBookings().stream()
                 .filter(b -> b.getBookingStatus() == BookingStatus.CONFIRMED)
                 .map(this::toBookingDetails)
                 .toList();
+    }
+
+    public BookingDetails createMultiLegBooking(List<String> flightNumbers, String firstName, String lastName) {
+        List<Booking> legs = flightNumbers.stream()
+                .map(this::getBookingFromFlightNumber)
+                .collect(Collectors.toList());
+
+        if (legs.stream().anyMatch(leg -> leg.getBookingStatus() != BookingStatus.AVAILABLE)) {
+            throw new IllegalStateException("One or more flights are not available for booking.");
+        }
+
+        Customer customer = new Customer(firstName, lastName);
+        Booking multiLegBooking = new Booking(
+            generateUniqueFlightNumber(),
+            legs.get(0).getDate(),
+            customer,
+            BookingStatus.AWAITING_CONFIRMATION,
+            legs.get(0).getFrom(),
+            legs.get(legs.size() - 1).getTo(),
+            legs.get(0).getBookingClass()
+        );
+
+        multiLegBooking.setLegs(legs);
+
+        legs.forEach(leg -> {
+            leg.setBookingStatus(BookingStatus.PART_OF_MULTI_LEG);
+            db.updateBooking(leg);
+        });
+
+        db.addBooking(multiLegBooking);
+        return toBookingDetails(multiLegBooking);
+    }
+
+    public List<BookingDetails> getAvailableConnections(String from, String to, LocalDate date) {
+        return db.getBookings().stream()
+                .filter(b -> b.getBookingStatus() == BookingStatus.AVAILABLE)
+                .filter(b -> b.getFrom().equals(from) && b.getDate().equals(date))
+                .flatMap(firstLeg -> db.getBookings().stream()
+                    .filter(secondLeg -> secondLeg.getBookingStatus() == BookingStatus.AVAILABLE)
+                    .filter(secondLeg -> secondLeg.getFrom().equals(firstLeg.getTo()) && secondLeg.getTo().equals(to))
+                    .filter(secondLeg -> secondLeg.getDate().equals(firstLeg.getDate()) || secondLeg.getDate().equals(firstLeg.getDate().plusDays(1)))
+                    .map(secondLeg -> List.of(firstLeg, secondLeg)))
+                .map(legs -> {
+                    Booking firstLeg = legs.get(0);
+                    Booking secondLeg = legs.get(1);
+                    return new BookingDetails(
+                        firstLeg.getBookingNumber() + "+" + secondLeg.getBookingNumber(),
+                        "", "", // No customer assigned yet
+                        firstLeg.getDate().toString(),
+                        firstLeg.getFrom(),
+                        secondLeg.getTo(),
+                        "AVAILABLE",
+                        firstLeg.getBookingClass().toString()
+                    );
+                })
+                .collect(Collectors.toList());
+    }
+
+    public Map<String, List<TokenBalance>> getDeFiAccountBalances(String userId) {
+        return langChain4jTools.fetchDeFiBalances(userId);
     }
 }

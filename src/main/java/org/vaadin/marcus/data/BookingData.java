@@ -35,5 +35,8 @@ public class BookingData {
         bookings.set(bookings.indexOf(booking), booking);
     }
 
-   
+    //add booking to db
+    public void addBooking(Booking booking) {
+        bookings.add(booking);
+    }
 }

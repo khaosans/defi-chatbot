@@ -1,45 +1,21 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
-// Check if ChatHistory.tsx exists in the same directory
-import ChatHistory from './ChatHistoryView'; // Ensure this path is correct
-// Check if ChatComponent.tsx exists in the same directory
-import ChatComponent from './ChatComponentView'; // Ensure this path is correct
+import { AppLayout } from '@vaadin/react-components/AppLayout';
+import { DrawerToggle } from '@vaadin/react-components/DrawerToggle';
+import { NavLink } from 'react-router-dom';
 
-const MainLayout: React.FC = () => {
-  const navigate = useNavigate(); // Initialize navigate for navigation
-
-  const handleLogout = () => {
-    navigate('/logout'); // Navigate to the /logout page
-  };
-
+export default function MainLayout() {
   return (
-    <div className="main-layout">
-      <div className="sidebar">
-        <ChatHistory />
-        <button onClick={handleLogout}>Logout</button> {/* Logout button */}
+    <AppLayout primarySection="drawer">
+      <DrawerToggle slot="navbar" />
+      <h1 slot="navbar">SourBot DeFi Portfolio Manager</h1>
+      <div slot="drawer">
+        <NavLink to="/">Home</NavLink>
+        <NavLink to="/defi-dashboard">DeFi Dashboard</NavLink>
+        {/* Add other navigation links as needed */}
       </div>
-      <div className="chat-area">
-        <ChatComponent />
+      <div>
+        {/* Router outlet will be rendered here */}
       </div>
-    </div>
+    </AppLayout>
   );
-};
-
-// Add styles for layout
-const styles = {
-  mainLayout: {
-    display: 'flex',
-    height: '100vh',
-  },
-  sidebar: {
-    width: '300px', // Adjust width as needed
-    borderRight: '1px solid #ccc',
-  },
-  chatArea: {
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-  },
-};
-
-export default MainLayout;
+}
