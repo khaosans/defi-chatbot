@@ -34,7 +34,6 @@
     </dependencyManagement>
 
     <dependencies>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -94,13 +93,6 @@
             <artifactId>vaadin-spring-boot-starter</artifactId>
             <version>${vaadin.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.web3j/core -->
-        <dependency>
-            <groupId>org.web3j</groupId>
-            <artifactId>core</artifactId>
-            <version>5.0.0</version>
-        </dependency>
-
 
         <!-- Spring Security Dependency -->
         <dependency>
@@ -119,13 +111,6 @@
             <artifactId>langchain4j-open-ai</artifactId>
             <version>0.34.0</version>
         </dependency>
-    
-      <dependency>
-        <groupId>org.apache.httpcomponents</groupId>
-        <artifactId>httpcore</artifactId>
-        <version>4.4.11</version>
-      </dependency>
-
     </dependencies>
 
     <build>
