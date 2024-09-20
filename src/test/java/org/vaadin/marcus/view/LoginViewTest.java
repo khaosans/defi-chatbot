@@ -1,42 +1,45 @@
-package org.vaadin.marcus.view;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith; // Added
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.vaadin.marcus.Application; // Import your main application class
+import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.login.LoginForm;
+
+import dev.langchain4j.openai.spring.AutoConfig;
+
+import static org.mockito.Mockito.*;
 import org.vaadin.marcus.service.UserService;
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = Application.class) // Specify the main application class
+@SpringBootTest
 public class LoginViewTest {
     @Mock
-    private UserService userService;
+    private UserService userService; // Ensure UserService is imported and available
+    @Mock
+    private LoginForm loginForm; // Ensure LoginForm is imported and available
 
-    private LoginView loginView; // Now properly injects UserService
+    @Mock
+    private UI ui;
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
+        when(UI.getCurrent()).thenReturn(ui);
     }
 
     @Test
     public void testSuccessfulLogin() {
-        // Arrange
-        
-        // Act
-        // Assert
-        assertTrue(true); // Check if the result is true
+        when(userService.authenticate("admin", "admin")).thenReturn(true);
+        loginForm.getElement().callJsFunction("login");
+        verify(userService).authenticate("admin", "admin");
+        verify(ui).navigate("main");
     }
 
     @Test
     public void testFailedLogin() {
-        // Arrange
-        
-        assertTrue(true);
+        when(userService.authenticate("admin", "wrongpassword")).thenReturn(false);
+        loginForm.getElement().callJsFunction("login");
+        verify(userService).authenticate("admin", "wrongpassword");
+        // Add verification for error message or UI behavior on failed login
     }
 }

@@ -18,7 +18,10 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '17'
-          distribution: 'temurin' # Changed from 'adopt' to 'temurin'
+          distribution: 'temurin'
+
+      - name: Set OPENAI_API_KEY
+        run: echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> $GITHUB_ENV
 
       - name: Build with Maven
         run: |
