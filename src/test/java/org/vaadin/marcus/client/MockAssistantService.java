@@ -1,7 +1,6 @@
 package org.vaadin.marcus.client;
 
 import org.vaadin.marcus.langchain4j.LangChain4jAssistant;
-import org.vaadin.marcus.client.AssistantService;
 
 public class MockAssistantService extends AssistantService {
     public MockAssistantService(LangChain4jAssistant langChain4jAssistant) {

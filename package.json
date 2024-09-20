@@ -24,10 +24,11 @@
     "@vaadin/vaadin-usage-statistics": "2.1.2",
     "construct-style-sheets-polyfill": "3.1.0",
     "date-fns": "2.29.3",
+    "ethers": "^5.7.2",
     "lit": "3.1.4",
     "nanoid": "^5.0.6",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-markdown": "^9.0.1",
     "react-router-dom": "^6.23.1"
   },
@@ -117,7 +118,7 @@
       "workbox-core": "7.1.0",
       "workbox-precaching": "7.1.0"
     },
-    "hash": "319cf0ec43e1a69a5d4efe36870e77e749878acfb9c778d6f609a427dd53babe"
+    "hash": "ee5f1eab27f83fabb7629f4a6122f5ff0b0bc09bd06fb9e45a2f10fa939879c1"
   },
   "overrides": {
     "@vaadin/bundles": "$@vaadin/bundles",
@@ -146,6 +147,7 @@
     "date-fns": "$date-fns",
     "@vaadin/vaadin-themable-mixin": "$@vaadin/vaadin-themable-mixin",
     "@vaadin/vaadin-lumo-styles": "$@vaadin/vaadin-lumo-styles",
-    "@vaadin/vaadin-material-styles": "$@vaadin/vaadin-material-styles"
+    "@vaadin/vaadin-material-styles": "$@vaadin/vaadin-material-styles",
+    "ethers": "$ethers"
   }
 }

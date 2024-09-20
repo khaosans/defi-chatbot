@@ -1,65 +1,40 @@
 import React, { useState, useEffect } from 'react';
-import { ethers } from 'ethers'; // Ensure ethers is imported correctly
 
 const Web3LoginButton: React.FC = () => {
   const [userAddress, setUserAddress] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
 
-  // Fetch wallet address if already connected (on page load)
   useEffect(() => {
+    // Fetch wallet address from the API on component mount
     const fetchWalletAddress = async () => {
-      if (typeof window !== 'undefined' && window.ethereum) {
-        try {
-          const provider = new ethers.BrowserProvider(window.ethereum); // Adjusted for newer ethers version
-          const signer = await provider.getSigner(); // Await the signer
-          const address = await signer.getAddress(); // Now this should work
-          setUserAddress(address); // Set the user address if already connected
-        } catch (error) {
-          console.error("Error fetching wallet address:", error);
-        }
+      const response = await fetch('/api/web3/address');
+      const address = await response.text();
+      if (address) {
+        setUserAddress(address);
       }
     };
     fetchWalletAddress();
   }, []);
 
-  // Handle connecting to the wallet
   const handleConnectWallet = async () => {
-    setLoading(true);
-    try {
-      if (typeof window !== 'undefined' && window.ethereum) {
-        const provider = new ethers.BrowserProvider(window.ethereum); // Adjusted for newer ethers version
-        // Request wallet connection from user
-        const accounts = await provider.send("eth_requestAccounts", []);
-        if (accounts.length > 0) {
-          const signer = await provider.getSigner(); // Await the signer
-          const address = await signer.getAddress(); // Now this should work
-          setUserAddress(address); // Set the user address after connection
-        }
-      }
-    } catch (error) {
-      console.error("Error connecting to wallet:", error);
-    } finally {
-      setLoading(false);
-    }
+    const response = await fetch('/api/web3/connect');
+    const address = await response.text();
+    setUserAddress(address);
   };
 
-  // Handle wallet disconnection (reset state, but MetaMask remains connected)
-  const handleDisconnectWallet = () => {
-    setUserAddress(null); // Clear the user address from state
-    console.log("Disconnected from wallet.");
+  const handleLogout = () => {
+    setUserAddress(null);
+    console.log("Disconnected from wallet");
   };
 
   return (
     <div>
       <button 
-        onClick={userAddress ? handleDisconnectWallet : handleConnectWallet} 
-        disabled={loading}
+        onClick={userAddress ? handleLogout : handleConnectWallet} 
+        className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-150 ease-in-out"
       >
-        {loading ? 'Connecting...' : (userAddress ? 'Disconnect Wallet' : 'Connect Wallet')}
+        {userAddress ? `Disconnect Wallet` : 'Connect Wallet'}
       </button>
-      {userAddress && (
-        <p>Connected Wallet: {userAddress}</p>
-      )}
+      {userAddress && <p>Connected: {userAddress}</p>}
     </div>
   );
 };
