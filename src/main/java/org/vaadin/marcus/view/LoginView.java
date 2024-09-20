@@ -10,7 +10,7 @@ public class LoginView extends VerticalLayout {
 
     private final LoginForm loginForm;
 
-    
+
     public LoginView(LoginForm loginForm) {
         this.loginForm = loginForm;
         addClassName("login-view");
@@ -33,7 +33,7 @@ public class LoginView extends VerticalLayout {
         add(loginForm);
     }
 
-    private boolean authenticate(String username, String password) {
+    protected boolean authenticate(String username, String password) {
         // Implement authentication logic here
         return "user".equals(username) && "password".equals(password);
     }
