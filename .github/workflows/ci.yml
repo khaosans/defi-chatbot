@@ -28,9 +28,6 @@ jobs:
           mvn clean install
           mvn vaadin:prepare-frontend
 
-      - name: Run unit tests
-        run: mvn test
-
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
