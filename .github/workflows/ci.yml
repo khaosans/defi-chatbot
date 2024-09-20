@@ -27,3 +27,20 @@ jobs:
 
       - name: Run unit tests
         run: mvn test
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install frontend dependencies
+        run: npm install
+        working-directory: src/main/frontend
+
+      - name: Build frontend
+        run: npm run build
+        working-directory: src/main/frontend
+
+      - name: Run frontend tests
+        run: npm test
+        working-directory: src/main/frontend
