@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 import "Frontend/themes/customer-support-agent/styles.css";
 import CustomButton from './CustomButton'; // Import CustomButton
+import Web3LoginButton from './Web3LoginButton';
 
 interface HeaderProps {
     children?: ReactNode;
@@ -27,6 +28,7 @@ const Header: React.FC<HeaderProps> = ({ children, logoutUrl }) => {
         <header className="header-container">
             <h1 className="header-title">SourBot</h1>
             <div className="header-actions">
+                <Web3LoginButton />
                 <CustomButton onClick={toggleTheme} className="toggle-button" bgColor="bg-blue-500">
                     {document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙'}
                 </CustomButton>

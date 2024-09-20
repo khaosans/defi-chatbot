@@ -19,15 +19,12 @@ import dev.langchain4j.agent.tool.Tool;
 public class LangChain4jTools {
 
     @Autowired
-    private DeBankMockService deBankMockService;
+    private final DeBankMockService deBankMockService;
 
     private final RestTemplate restTemplate;
-    private final String ourFlavicon;
-
     public LangChain4jTools(DeBankMockService deBankMockService, RestTemplate restTemplate, @Value("${debank.api.key}") String ourFlavicon) {
         this.deBankMockService = deBankMockService;
         this.restTemplate = restTemplate;
-        this.ourFlavicon = ourFlavicon;
     }
 
     @Tool("Retrieve DeFi account balances for a specific chain")
@@ -74,9 +71,5 @@ public class LangChain4jTools {
         return BigDecimal.valueOf(value);
     }
 
-    public void exampleUsage() {
-        double someDoubleValue = 10.0;
-        BigDecimal convertedValue = convertDoubleToBigDecimal(someDoubleValue);
-        // Use convertedValue as needed
-    }
+    
 }
