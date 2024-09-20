@@ -8,7 +8,12 @@ import com.vaadin.flow.router.Route;
 @Route("login")
 public class LoginView extends VerticalLayout {
 
+    private final LoginForm loginForm;
+
+    
     public LoginView(LoginForm loginForm) {
+        this.loginForm = loginForm;
+        addClassName("login-view");
         setSizeFull();
         setAlignItems(Alignment.CENTER);
         setJustifyContentMode(JustifyContentMode.CENTER); // Added justify content mode for better alignment
@@ -28,7 +33,7 @@ public class LoginView extends VerticalLayout {
         add(loginForm);
     }
 
-    protected boolean authenticate(String username, String password) {
+    private boolean authenticate(String username, String password) {
         // Implement authentication logic here
         return "user".equals(username) && "password".equals(password);
     }

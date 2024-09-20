@@ -89,11 +89,11 @@
 
 [data-theme="dark"] {
   --background-color: #1e1e1e;
-  --text-color: #ffffff; /* White text color for better contrast */
+  --text-color: #ffffff; /* Ensure text color is white for better contrast */
   --header-background-color: #2d2d2d;
-  --header-text-color: #ffffff;
+  --header-text-color: #ffffff; /* Ensure header text is also white */
   --input-background-color: #3d3d3d;
-  --input-text-color: #ffffff;
+  --input-text-color: #ffffff; /* Ensure input text is white */
   --button-background-color: #4a90e2;
   --button-text-color: #ffffff;
   --button-hover-background-color: #3a7bc8;
@@ -235,4 +235,9 @@ vaadin-message-input::part(input-field) {
 /* Adjust input placeholder color for better visibility in dark mode */
 [data-theme="dark"] vaadin-message-input::part(input-field)::placeholder {
   color: #a0a0a0;
+}
+
+/* Ensure all text uses the --text-color variable for color */
+body, h1, h2, h3, p, li, a, input, button, textarea {
+  color: var(--text-color);
 }
