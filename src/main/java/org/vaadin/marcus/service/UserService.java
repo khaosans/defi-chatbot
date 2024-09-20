@@ -17,9 +17,4 @@ public class UserService {
         // userRepository.save(newUser);
         System.out.println("User created with username: " + newUser.getUsername());
     }
-
-    public Object authenticate(String anyString, String anyString2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'authenticate'");
-    }
 }

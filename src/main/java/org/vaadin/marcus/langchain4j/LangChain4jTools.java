@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import org.vaadin.marcus.client.DeBankMockService;
 import org.vaadin.marcus.model.TokenBalance;
-import org.vaadin.marcus.service.DeBankMockService;
 
 import dev.langchain4j.agent.tool.Tool;
 
@@ -22,12 +22,12 @@ public class LangChain4jTools {
     private DeBankMockService deBankMockService;
 
     private final RestTemplate restTemplate;
-    private final String debankApiKey;
+    private final String ourFlavicon;
 
-    public LangChain4jTools(DeBankMockService deBankMockService, RestTemplate restTemplate, @Value("${debank.api.key}") String debankApiKey) {
+    public LangChain4jTools(DeBankMockService deBankMockService, RestTemplate restTemplate, @Value("${debank.api.key}") String ourFlavicon) {
         this.deBankMockService = deBankMockService;
         this.restTemplate = restTemplate;
-        this.debankApiKey = debankApiKey;
+        this.ourFlavicon = ourFlavicon;
     }
 
     @Tool("Retrieve DeFi account balances for a specific chain")
