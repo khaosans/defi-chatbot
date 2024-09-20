@@ -6,18 +6,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 import org.vaadin.marcus.model.TokenBalance;
 import org.vaadin.marcus.service.DeBankMockService;
-import org.springframework.web.client.RestTemplate;
 
 import dev.langchain4j.agent.tool.Tool;
 
 @Component
 public class LangChain4jTools {
 
-    private final DeBankMockService deBankMockService;
+    @Autowired
+    private DeBankMockService deBankMockService;
+
     private final RestTemplate restTemplate;
     private final String debankApiKey;
 
@@ -42,23 +45,21 @@ public class LangChain4jTools {
         return deBankMockService.getTokenPrice(token);
     }
 
-    @Tool("Generate portfolio insights")
-    public List<String> generatePortfolioInsights() {
-        return deBankMockService.generatePortfolioInsights();
-    }
+    // Removed generatePortfolioInsights method call
 
     public Map<String, List<TokenBalance>> fetchDeFiBalances(String userId) {
         // Mocked data for DeFi balances
         Map<String, List<TokenBalance>> balances = new HashMap<>();
         balances.put("Ethereum", Arrays.asList(
-            new TokenBalance("ETH", 10.5),
-            new TokenBalance("USDC", 1000.0)
+            new TokenBalance("ETH", new BigDecimal("2.5")),
+            new TokenBalance("USDC", new BigDecimal("1000.0")),
+            new TokenBalance("LINK", new BigDecimal("50.0"))
         ));
         balances.put("Binance", Arrays.asList(
-            new TokenBalance("BNB", 5.2)
+            new TokenBalance("BNB", BigDecimal.valueOf(5.2))  // Corrected type conversion
         ));
         balances.put("Polygon", Arrays.asList(
-            new TokenBalance("MATIC", 500.0)
+            new TokenBalance("MATIC", BigDecimal.valueOf(500.0))  // Corrected type conversion
         ));
         return balances;
     }
@@ -66,5 +67,16 @@ public class LangChain4jTools {
     public String getChainInfo(String chainId) {
         String url = "https://pro-openapi.debank.com/v1/chain?id=" + chainId;
         return restTemplate.getForObject(url, String.class);
+    }
+
+    public BigDecimal convertDoubleToBigDecimal(double value) {
+        // Correct conversion from double to BigDecimal
+        return BigDecimal.valueOf(value);
+    }
+
+    public void exampleUsage() {
+        double someDoubleValue = 10.0;
+        BigDecimal convertedValue = convertDoubleToBigDecimal(someDoubleValue);
+        // Use convertedValue as needed
     }
 }
