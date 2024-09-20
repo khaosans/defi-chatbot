@@ -1,24 +1,43 @@
 import React, { useState, useEffect } from 'react';
+import { getWalletAddress } from '../generated/Web3Service'; // Ensure the import path is correct
+import { ethers } from 'ethers'; // Ensure ethers is imported
 
 const Web3LoginButton: React.FC = () => {
   const [userAddress, setUserAddress] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    // Fetch wallet address from the API on component mount
     const fetchWalletAddress = async () => {
-      const response = await fetch('/api/web3/address');
-      const address = await response.text();
-      if (address) {
-        setUserAddress(address);
+      try {
+        const address = await getWalletAddress(); // Call the service method
+        if (address) {
+          setUserAddress(address); // Set the user address if fetched
+        }
+      } catch (error) {
+        console.error("Error fetching wallet address:", error);
       }
     };
     fetchWalletAddress();
   }, []);
 
   const handleConnectWallet = async () => {
-    const response = await fetch('/api/web3/connect');
-    const address = await response.text();
-    setUserAddress(address);
+    setLoading(true);
+    try {
+      // Check if window.ethereum is available
+      if (typeof window !== 'undefined' && window.ethereum) {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        await provider.send("eth_requestAccounts", []);
+        const signer = provider.getSigner();
+        const address = await signer.getAddress();
+        setUserAddress(address); // Set the user address after connection
+      } else {
+        console.error("Ethereum provider is not available. Please install MetaMask.");
+      }
+    } catch (error) {
+      console.error("Error connecting to wallet:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleLogout = () => {
@@ -30,11 +49,13 @@ const Web3LoginButton: React.FC = () => {
     <div>
       <button 
         onClick={userAddress ? handleLogout : handleConnectWallet} 
-        className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-150 ease-in-out"
+        disabled={loading}
       >
-        {userAddress ? `Disconnect Wallet` : 'Connect Wallet'}
+        {loading ? 'Connecting...' : (userAddress ? 'Disconnect Wallet' : 'Connect Wallet')}
       </button>
-      {userAddress && <p>Connected: {userAddress}</p>}
+      {userAddress && (
+        <p>Connected Wallet: {userAddress}</p>
+      )}
     </div>
   );
 };
