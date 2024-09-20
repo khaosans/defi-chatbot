@@ -2,20 +2,13 @@ import React from 'react';
 import { AppLayout } from '@vaadin/react-components/AppLayout';
 import { DrawerToggle } from '@vaadin/react-components/DrawerToggle';
 import { NavLink } from 'react-router-dom';
+import Header from "Frontend/components/Header";
 
-export default function MainLayout() {
+export default function MainLayout({ children }: { children: React.ReactNode }) {
   return (
     <AppLayout primarySection="drawer">
-      <DrawerToggle slot="navbar" />
-      <h1 slot="navbar">SourBot DeFi Portfolio Manager</h1>
-      <div slot="drawer">
-        <NavLink to="/">Home</NavLink>
-        <NavLink to="/defi-dashboard">DeFi Dashboard</NavLink>
-        {/* Add other navigation links as needed */}
-      </div>
-      <div>
-        {/* Router outlet will be rendered here */}
-      </div>
+      <Header/>
+      {children}
     </AppLayout>
   );
 }

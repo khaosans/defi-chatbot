@@ -1,4 +1,4 @@
-package org.vaadin.marcus.service;
+package org.vaadin.marcus.client;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -10,6 +10,12 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 import org.vaadin.marcus.model.TokenBalance;
 
+import com.vaadin.flow.server.auth.AnonymousAllowed;
+import com.vaadin.hilla.BrowserCallable;
+
+
+@BrowserCallable
+@AnonymousAllowed
 @Service
 public class DeBankMockService {
 

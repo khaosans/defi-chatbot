@@ -38,7 +38,6 @@ public class CoinbaseConfig {
     @Bean
     public Gson gson() {
         return new GsonBuilder()
-                .registerTypeAdapterFactory(OptionalTypeAdapter.create())
                 .create();
     }
 
