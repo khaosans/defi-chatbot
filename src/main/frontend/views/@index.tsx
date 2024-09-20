@@ -62,8 +62,8 @@ export default function Index() {
 
   return (
       <MainLayout>
-        <div className="index-container">
-          <div className="sidebar">
+        <div className="index-container" >
+          <div className="sidebar" style={{ width: '500px' }}>
             <h3>Chat History</h3>
             <div className="chat-history">
               <ul>
