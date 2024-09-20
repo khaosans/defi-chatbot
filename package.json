@@ -30,7 +30,8 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-markdown": "^9.0.1",
-    "react-router-dom": "^6.23.1"
+    "react-router-dom": "^6.23.1",
+    "web3modal": "^1.9.12"
   },
   "devDependencies": {
     "@babel/preset-react": "7.24.7",
@@ -118,7 +119,7 @@
       "workbox-core": "7.1.0",
       "workbox-precaching": "7.1.0"
     },
-    "hash": "ee5f1eab27f83fabb7629f4a6122f5ff0b0bc09bd06fb9e45a2f10fa939879c1"
+    "hash": "f5690725885d465a57d05f9a83ceb4077147c09f7b7f7bfff04f8bc792f5cbb4"
   },
   "overrides": {
     "@vaadin/bundles": "$@vaadin/bundles",
@@ -148,6 +149,7 @@
     "@vaadin/vaadin-themable-mixin": "$@vaadin/vaadin-themable-mixin",
     "@vaadin/vaadin-lumo-styles": "$@vaadin/vaadin-lumo-styles",
     "@vaadin/vaadin-material-styles": "$@vaadin/vaadin-material-styles",
-    "ethers": "$ethers"
+    "ethers": "$ethers",
+    "web3modal": "$web3modal"
   }
 }
