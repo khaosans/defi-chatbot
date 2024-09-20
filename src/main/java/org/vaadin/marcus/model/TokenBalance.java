@@ -1,11 +1,13 @@
 package org.vaadin.marcus.model;
 
+import java.math.BigDecimal;
+
 public class TokenBalance {
     private String token;
-    private double balance;
+    private BigDecimal balance;
 
     // Constructor, getters, and setters
-    public TokenBalance(String token, double balance) {
+    public TokenBalance(String token, BigDecimal balance) {
         this.token = token;
         this.balance = balance;
     }
@@ -15,15 +17,9 @@ public class TokenBalance {
         return token;
     }
 
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public double getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
 
-    public void setBalance(double balance) {
-        this.balance = balance;
-    }
+    // ... other methods if needed ...
 }
