@@ -1333,7 +1333,7 @@ File: src/main/java/org/vaadin/marcus/client/AssistantService.java
 ================
 package org.vaadin.marcus.client;
 
-import org.vaadin.marcus.langchain4j.LangChain4jAssistant;
+import langchain4j.org.agent.sour.LangChain4jAssistant;
 
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import com.vaadin.hilla.BrowserCallable;
@@ -1372,9 +1372,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
-import org.vaadin.marcus.data.BookingStatus;
-import org.vaadin.marcus.service.BookingDetails;
-import org.vaadin.marcus.service.FlightService;
+import data.org.agent.sour.BookingStatus;
+import service.org.agent.sour.BookingDetails;
+import service.org.agent.sour.FlightService;
 
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import com.vaadin.hilla.BrowserCallable;
@@ -1426,7 +1426,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-import org.vaadin.marcus.service.AccountDetails;
+import service.org.agent.sour.AccountDetails;
 
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import com.vaadin.hilla.BrowserCallable;
@@ -1453,7 +1453,7 @@ import okhttp3.OkHttpClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.vaadin.marcus.service.CoinbaseService;
+import service.org.agent.sour.CoinbaseService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -1630,7 +1630,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
-import org.vaadin.marcus.service.UserService; // Assuming you have a UserService for authentication
+import service.org.agent.sour.UserService; // Assuming you have a UserService for authentication
 
 @Controller
 public class LoginController {
@@ -1922,8 +1922,8 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.stereotype.Component;
-import org.vaadin.marcus.service.AccountDetails;
-import org.vaadin.marcus.service.CoinbaseService;
+import service.org.agent.sour.AccountDetails;
+import service.org.agent.sour.CoinbaseService;
 
 import dev.langchain4j.agent.tool.Tool;
 
@@ -2085,7 +2085,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.vaadin.marcus.model.TokenBalance;
+import model.org.agent.sour.TokenBalance;
 import org.vaadin.marcus.service.DeBankMockService;
 import org.springframework.web.client.RestTemplate;
 
@@ -2411,7 +2411,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
-import org.vaadin.marcus.model.TokenBalance;
+import model.org.agent.sour.TokenBalance;
 
 @Service
 public class DeBankMockService {
@@ -2569,8 +2569,8 @@ package org.vaadin.marcus.service;
 
 import org.springframework.stereotype.Service;
 import org.vaadin.marcus.data.*;
-import org.vaadin.marcus.langchain4j.LangChain4jTools;
-import org.vaadin.marcus.model.TokenBalance;
+import langchain4j.org.agent.sour.LangChain4jTools;
+import model.org.agent.sour.TokenBalance;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -2849,7 +2849,7 @@ File: src/main/java/org/vaadin/marcus/views/LoginView.java
 package org.vaadin.marcus.views;
 
 import org.vaadin.marcus.controller.LoginController;
-import org.vaadin.marcus.langchain4j.LangChain4jTools;
+import langchain4j.org.agent.sour.LangChain4jTools;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox; // Import Checkbox
