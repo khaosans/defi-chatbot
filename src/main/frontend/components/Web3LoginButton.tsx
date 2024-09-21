@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ethers } from 'ethers'; // Ensure ethers is imported
+import { ethers } from 'ethers'; // Ensure ethers is imported correctly
 
 const Web3LoginButton: React.FC = () => {
   const [userAddress, setUserAddress] = useState<string | null>(null);
@@ -10,7 +10,7 @@ const Web3LoginButton: React.FC = () => {
     const fetchWalletAddress = async () => {
       if (typeof window !== 'undefined' && window.ethereum) {
         try {
-          const provider = new ethers.providers.Web3Provider(window.ethereum);
+          const provider = new ethers.providers.Web3Provider(window.ethereum); // This line should work if ethers is imported correctly
           const accounts = await provider.listAccounts();
           if (accounts.length > 0) {
             setUserAddress(accounts[0]); // Set the user address if already connected
