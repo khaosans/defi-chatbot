@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import { ComboBox } from '@vaadin/vaadin-combo-box'; // Import Vaadin ComboBox
 import "Frontend/themes/customer-support-agent/styles.css";
 
 interface HeaderProps {
