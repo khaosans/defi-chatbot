@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { AssistantService, BookingService } from "Frontend/generated/endpoints";
-import BookingDetails from "../generated/org/vaadin/marcus/service/BookingDetails";
+// Ensure these services are correctly exported in Frontend/generated/endpoints
+import { AssistantEndpoint } from "Frontend/generated/endpoints"; 
 import { GridColumn } from "@vaadin/react-components/GridColumn";
 import { Grid } from "@vaadin/react-components/Grid";
 import { MessageInput } from "@vaadin/react-components/MessageInput";
@@ -13,17 +13,10 @@ import MainLayout from "Frontend/views/MainLayout";
 export default function Index() {
   const [chatId, setChatId] = useState(nanoid());
   const [working, setWorking] = useState(false);
-  const [bookings, setBookings] = useState<BookingDetails[]>([]);
   const [messages, setMessages] = useState<MessageItem[]>([{
     role: 'assistant',
     content: 'Welcome to SourBot Labs?'
   }]);
-
-  useEffect(() => {
-    if (!working) {
-      BookingService.getBookings().then(setBookings);
-    }
-  }, [working]);
 
   function addMessage(message: MessageItem) {
     setMessages(messages => [...messages, message]);
@@ -44,17 +37,17 @@ export default function Index() {
       content: message
     });
     let first = true;
-    AssistantService.chat(chatId, message)
-        .onNext(token => {
-          if (first && token) {
-            addMessage({
-              role: 'assistant',
-              content: token
-            });
-            first = false;
-          } else {
-            appendToLatestMessage(token);
-          }
+    AssistantEndpoint.chat(chatId, message)
+        .onNext((token: string) => { // Ensure 'token' is correctly typed
+            if (first && token) {
+                addMessage({
+                    role: 'assistant',
+                    content: token
+                });
+                first = false;
+            } else {
+                appendToLatestMessage(token);
+            }
         })
         .onError(() => setWorking(false))
         .onComplete(() => setWorking(false));

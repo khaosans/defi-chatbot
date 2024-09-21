@@ -4,23 +4,25 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.methods.response.EthAccounts;
 import org.web3j.protocol.core.methods.response.EthChainId;
-import org.web3j.protocol.http.HttpService;
 
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import com.vaadin.hilla.BrowserCallable;
 
 @BrowserCallable
 @AnonymousAllowed
+@RestController
 public class Web3Endpoint {
+
     private final Web3j web3j;
 
-    public Web3Endpoint(@Value("${infura.api.key}") String apiKey) {
-        // Initialize Web3j with Infura API URL
-        this.web3j = Web3j.build(new HttpService("https://optimism-mainnet.infura.io/v3/" + apiKey));
+    @Autowired
+    public Web3Endpoint(Web3j web3j) {
+        this.web3j = web3j;
     }
 
     public String getWalletAddress() {
