@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "Frontend/themes/customer-support-agent/styles.css";
+import Web3LoginButton from './Web3LoginButton';
 
 interface HeaderProps {
     logoutUrl: string; // Define the prop type
@@ -46,6 +47,7 @@ const Header: React.FC<HeaderProps> = ({ logoutUrl }) => { // Accept the prop
         <header className="header-container">
             <h1 className="header-title">SourBot</h1>
             <div className="header-actions">
+                <Web3LoginButton />
                 <button className="theme-toggle-button" onClick={toggleTheme}>
                     {document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙'}
                 </button>

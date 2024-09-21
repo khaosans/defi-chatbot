@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers'; // Ensure ethers is imported correctly
+
 const Web3LoginButton: React.FC = () => {
   const [userAddress, setUserAddress] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -18,7 +19,7 @@ const Web3LoginButton: React.FC = () => {
         }
       }
     };
-    fetchWalletAddress(); // Call the function
+    fetchWalletAddress();
   }, []);
 
   // Handle connecting to the wallet
@@ -34,8 +35,6 @@ const Web3LoginButton: React.FC = () => {
           const address = await signer.getAddress(); // Now this should work
           setUserAddress(address); // Set the user address after connection
         }
-      } else {
-        console.error("Ethereum provider is not available. Please install MetaMask.");
       }
     } catch (error) {
       console.error("Error connecting to wallet:", error);
