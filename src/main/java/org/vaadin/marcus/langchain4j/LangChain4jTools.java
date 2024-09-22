@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.vaadin.marcus.client.DeBankMockService;
+import org.vaadin.marcus.client.Web3Service;
 import org.vaadin.marcus.model.TokenBalance;
 
 import dev.langchain4j.agent.tool.Tool;
@@ -20,9 +21,12 @@ public class LangChain4jTools {
 
     @Autowired
     private final DeBankMockService deBankMockService;
+    @Autowired
+    private final Web3Service web3Service;
 
     private final RestTemplate restTemplate;
-    public LangChain4jTools(DeBankMockService deBankMockService, RestTemplate restTemplate, @Value("${debank.api.key}") String ourFlavicon) {
+    public LangChain4jTools( Web3Service web3Service,DeBankMockService deBankMockService, RestTemplate restTemplate, @Value("${debank.api.key}") String ourFlavicon) {
+        this.web3Service = web3Service;
         this.deBankMockService = deBankMockService;
         this.restTemplate = restTemplate;
     }
@@ -40,6 +44,17 @@ public class LangChain4jTools {
     @Tool("Get USD price for a specific token")
     public BigDecimal getTokenUSDPrice(String token) {
         return deBankMockService.getTokenPrice(token);
+    }
+
+    @Tool("Get wallet address")
+    public String getWalletAddress() {
+        return web3Service.requestAddress();
+    }
+
+
+    @Tool("Get current network")
+    public String getCurrentNetwork() {
+        return web3Service.getCurrentNetwork();
     }
 
     // Removed generatePortfolioInsights method call

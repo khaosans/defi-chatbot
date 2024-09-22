@@ -4,26 +4,29 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.methods.response.EthAccounts;
 import org.web3j.protocol.core.methods.response.EthChainId;
-import org.web3j.protocol.http.HttpService;
 
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import com.vaadin.hilla.BrowserCallable;
 
 @BrowserCallable
 @AnonymousAllowed
+@Service
 public class Web3Service {
-    private final Web3j web3j;
+    private final Web3j web3j; // Ensure this is final
 
-    public Web3Service(@Value("${infura.api.key}") String apiKey) {
-        // Initialize Web3j with Infura API URL
-        this.web3j = Web3j.build(new HttpService("https://optimism-mainnet.infura.io/v3/" + apiKey));
+    private String walletAddress;
+
+    @Autowired
+    public Web3Service(Web3j web3j) {
+        this.web3j = web3j;
     }
 
-    public String getWalletAddress() {
+    public String requestAddress() {
         try {
             EthAccounts accounts = web3j.ethAccounts().send();
             List<String> addresses = accounts.getAccounts();
@@ -43,7 +46,6 @@ public class Web3Service {
             EthChainId chainIdResponse = web3j.ethChainId().send();
             return chainIdResponse.getChainId().toString(); // Return the current network ID
         } catch (IOException e) {
-            // e.printStackTrace();
             return ""; // Handle exceptions and return empty string
         }
     }
