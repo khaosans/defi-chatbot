@@ -9,7 +9,6 @@ import com.vaadin.flow.router.Route;
 public class LoginView extends VerticalLayout {
 
     public LoginView(LoginForm loginForm) {
-        addClassName("login-view");
         setSizeFull();
         setAlignItems(Alignment.CENTER);
         setJustifyContentMode(JustifyContentMode.CENTER); // Added justify content mode for better alignment

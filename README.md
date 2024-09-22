@@ -153,6 +153,7 @@ This software is for educational and demonstration purposes only. It is not inte
    - Receive AI-generated insights on your portfolio.
    - Filter tokens by specific blockchain networks.
    - Generate and simulate trading strategies.
+
 4. **AI-Assisted Actions:** SourBot can help with tasks like retrieving task details, updating statuses, confirming completions, and providing DeFi investment advice.
 
 ## Recent Enhancements
