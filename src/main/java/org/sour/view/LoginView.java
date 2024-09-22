@@ -4,19 +4,19 @@ import com.vaadin.flow.component.login.LoginForm;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Route("login")
 public class LoginView extends VerticalLayout {
 
     private final LoginForm loginForm;
 
-
+    @Autowired
     public LoginView(LoginForm loginForm) {
         this.loginForm = loginForm;
         addClassName("login-view");
         setSizeFull();
         setAlignItems(Alignment.CENTER);
-        setJustifyContentMode(JustifyContentMode.CENTER); // Added justify content mode for better alignment
         setJustifyContentMode(JustifyContentMode.CENTER);
 
         loginForm.addLoginListener(e -> {
@@ -36,10 +36,5 @@ public class LoginView extends VerticalLayout {
     protected boolean authenticate(String username, String password) {
         // Implement authentication logic here
         return "user".equals(username) && "password".equals(password);
-    }
-
-    public boolean attemptLogin(String string, String string2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'attemptLogin'");
     }
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 // Ensure these services are correctly exported in Frontend/generated/endpoints
-import { AssistantEndpoint } from "Frontend/generated/endpoints"; 
+import { AssistantEndpoint } from "Frontend/generated/endpoints"; // Ensure this path is correct
 import { GridColumn } from "@vaadin/react-components/GridColumn";
 import { Grid } from "@vaadin/react-components/Grid";
 import { MessageInput } from "@vaadin/react-components/MessageInput";
