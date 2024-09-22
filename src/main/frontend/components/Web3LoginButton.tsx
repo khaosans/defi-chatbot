@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers'; // Ensure ethers is imported
+import { Web3Service } from 'Frontend/generated/endpoints';
 
 const Web3LoginButton: React.FC = () => {
   const [userAddress, setUserAddress] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+ 
 
   // Fetch wallet address if already connected (on page load)
   useEffect(() => {
@@ -14,6 +16,7 @@ const Web3LoginButton: React.FC = () => {
           const accounts = await provider.listAccounts();
           if (accounts.length > 0) {
             setUserAddress(accounts[0]); // Set the user address if already connected
+            Web3Service.setWalletAddress(accounts[0]);
           }
         } catch (error) {
           console.error("Error fetching wallet address:", error);
@@ -22,6 +25,8 @@ const Web3LoginButton: React.FC = () => {
     };
     fetchWalletAddress();
   }, []);
+
+
 
   // Handle connecting to the wallet
   const handleConnectWallet = async () => {
