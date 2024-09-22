@@ -41,15 +41,6 @@ public class Web3Service {
         }
     }
 
-    // Set wallet address
-    public void setWalletAddress(String walletAddress) {
-        this.walletAddress = walletAddress;
-    }
-
-    public String getWalletAddress() {
-        return walletAddress;
-    }
-
     public String getCurrentNetwork() {
         try {
             EthChainId chainIdResponse = web3j.ethChainId().send();

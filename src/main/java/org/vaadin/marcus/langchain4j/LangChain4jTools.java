@@ -48,7 +48,7 @@ public class LangChain4jTools {
 
     @Tool("Get wallet address")
     public String getWalletAddress() {
-        return web3Service.getWalletAddress();
+        return web3Service.requestAddress();
     }
 
 
