@@ -142,15 +142,18 @@ This software is for educational and demonstration purposes only. It is not inte
 ## Usage Guide
 
 1. **Chat Interface:** Interact with SourBot for task information, management, or DeFi portfolio inquiries.
-2. **Task Management:**
-   - Use the tabbed interface to view different task statuses (All, In Progress, Completed, Cancelled)
-   - Search for specific tasks using the search bar
-   - Check task status counts at the top of the grid for a quick overview
-3. **DeFi Portfolio Management:**
-   - View aggregated DeFi balances across multiple chains
-   - Receive AI-generated insights on your portfolio
-   - Filter tokens by specific blockchain networks
-   - Generate and simulate trading strategies
+2. **Web3 Integration:**
+   - Use the **Connect Wallet** button to connect your Web3 wallet (e.g., MetaMask).
+   - The button will display the connected wallet address once successfully connected.
+3. **Task Management:** 
+   - Use the tabbed interface to view different task statuses (All, In Progress, Completed, Cancelled).
+   - Search for specific tasks using the search bar.
+   - Check task status counts at the top of the grid for a quick overview.
+   - View aggregated DeFi balances across multiple chains.
+   - Receive AI-generated insights on your portfolio.
+   - Filter tokens by specific blockchain networks.
+   - Generate and simulate trading strategies.
+
 4. **AI-Assisted Actions:** SourBot can help with tasks like retrieving task details, updating statuses, confirming completions, and providing DeFi investment advice.
 
 ## Recent Enhancements

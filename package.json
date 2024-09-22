@@ -17,6 +17,7 @@
     "@vaadin/polymer-legacy-adapter": "24.4.0",
     "@vaadin/react-components": "24.4.0",
     "@vaadin/router": "^1.7.5",
+    "@vaadin/vaadin": "^14.12.1",
     "@vaadin/vaadin-development-mode-detector": "2.0.7",
     "@vaadin/vaadin-lumo-styles": "24.4.0",
     "@vaadin/vaadin-material-styles": "24.4.0",
@@ -24,12 +25,14 @@
     "@vaadin/vaadin-usage-statistics": "2.1.2",
     "construct-style-sheets-polyfill": "3.1.0",
     "date-fns": "2.29.3",
+    "ethers": "^6.13.2",
     "lit": "3.1.4",
     "nanoid": "^5.0.6",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-markdown": "^9.0.1",
-    "react-router-dom": "^6.23.1"
+    "react-router-dom": "^6.23.1",
+    "web3modal": "^1.9.12"
   },
   "devDependencies": {
     "@babel/preset-react": "7.24.7",
@@ -117,7 +120,8 @@
       "workbox-core": "7.1.0",
       "workbox-precaching": "7.1.0"
     },
-    "hash": "319cf0ec43e1a69a5d4efe36870e77e749878acfb9c778d6f609a427dd53babe"
+    "hash": "e0b7c3732f5c2c03599aebeae98bfc35099a0da6a392b0cab53a5eda3bac33e1"
+
   },
   "overrides": {
     "@vaadin/bundles": "$@vaadin/bundles",
@@ -146,6 +150,9 @@
     "date-fns": "$date-fns",
     "@vaadin/vaadin-themable-mixin": "$@vaadin/vaadin-themable-mixin",
     "@vaadin/vaadin-lumo-styles": "$@vaadin/vaadin-lumo-styles",
-    "@vaadin/vaadin-material-styles": "$@vaadin/vaadin-material-styles"
+    "@vaadin/vaadin-material-styles": "$@vaadin/vaadin-material-styles",
+    "ethers": "$ethers",
+    "web3modal": "$web3modal",
+    "@vaadin/vaadin": "$@vaadin/vaadin"
   }
 }
